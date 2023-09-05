@@ -70,8 +70,10 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
+    # Este código verifica uma condição de vitória para 'X' ou 'O' nas linhas, colunas ou diagonais do
+    # 'tabuleiro', retornando o vencedor ou Nenhum se não houver vencedor.
     if checkRows(board, x) or checkColums(board, X) or checkBotton(board, X) or checkBotton(board, X):
-        return x
+        return X
     elif checkRows(board, O) or checkColums(board, O) or checkBotton(board, O) or checkBotton(board, O):
         return 0
     else:
