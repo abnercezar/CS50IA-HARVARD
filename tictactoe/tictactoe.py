@@ -70,7 +70,9 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    if checkRows(board, x) or checkColums(board, x) or checkTopToBottonDiagonal(board, x) or checkTopToBottonDiagonal
+    if checkRows(board, x) or checkColums(board, x) or checkBotton(board, x) or checkBotton(board, x):
+        return x
+    elif checkRows(board, O) or checkColums(board, O) or checkBotton
 
 
 def terminal(board):
