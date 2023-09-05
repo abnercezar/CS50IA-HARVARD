@@ -102,7 +102,7 @@ def checkBotton(board, player)
 
 # Esta função verifica se todas as células do 'quadro' estão vazias.
 # Retorna True se todas as células estiverem vazias, caso contrário, False.
-def Grav(board):
+def grav(board):
     countEmpty = (len(board) * len(board[0]))
     for row in range(len(board)):
         for col in range(len(board[0])):
@@ -115,7 +115,10 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    raise NotImplementedError
+    if winner(board) or grav(board):
+        return True
+    else:
+        return false
 
 
 def utility(board):
