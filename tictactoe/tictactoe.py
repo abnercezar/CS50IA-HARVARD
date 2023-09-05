@@ -22,6 +22,9 @@ def player(board):
     """
     Returns player who has the next turn on a board.
     """
+    # Este código conta as ocorrências de 'X' e 'O' em um 'quadro' de lista 2D,
+    # retornando 'X' se as contagens forem iguais, caso contrário, 'O'.
+    
     countX = 0
     countO = 0
     for row in range(len(board)):
