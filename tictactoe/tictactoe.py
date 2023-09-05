@@ -52,9 +52,11 @@ def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
     """
-    (X, Y) = action
+    (x, y) = action
     #print(action)
-    
+    if x < 0 or x >= len(board) or y < 0 or y >= len(board[0]):
+        raise IndexError()
+
 
 def winner(board):
     """
