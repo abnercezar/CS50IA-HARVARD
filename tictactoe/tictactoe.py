@@ -41,6 +41,8 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
+    # Este código gera um conjunto de movimentos possíveis
+    # verificando espaços vazios em cada linha do ‘tabuleiro’.
     possible_moves = set()
     for row in range(len(board[0])):
         if board[row][col] == EMPTY:
@@ -53,7 +55,6 @@ def result(board, action):
     Returns the board that results from making move (i, j) on the board.
     """
     (x, y) = action
-
 
     if x < 0 or x >= len(board) or y < 0 or y >= len(board[0]):
         raise IndexError()
