@@ -81,8 +81,21 @@ def winner(board):
 
 def checkRows(board, player):
     for row range(len(board[0])):
-        if board[row][col] == player:
+        count = 0
+        for col in range(len(board[0])):
+            if board[row][col] == player:
+                count += 1
+        if count == len(board[0]):
+            return True
+    return false
 
+def checkBotton(board, player)
+    count = 0
+    for row in range(len(board)):
+        for col in range(len(board[0])):
+            if row == col and board[row][col] == player:
+                count += 1
+    return count == len(board[0])
 
 def terminal(board):
     """
