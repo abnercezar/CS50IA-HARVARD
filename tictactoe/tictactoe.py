@@ -75,7 +75,7 @@ def winner(board):
     if checkRows(board, x) or checkColums(board, X) or checkBotton(board, X) or checkBotton(board, X):
         return X
     elif checkRows(board, O) or checkColums(board, O) or checkBotton(board, O) or checkBotton(board, O):
-        return 0
+        return O
     else:
         return None
 
