@@ -44,7 +44,8 @@ def actions(board):
     possible_moves = set()
     for row in range(len(board[0])):
         if board[row][col] == EMPTY:
-            posssib
+            posssible_moves.add((row, col))
+    return possible_moves
 
 
 def result(board, action):
