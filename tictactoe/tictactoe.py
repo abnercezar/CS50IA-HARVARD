@@ -100,6 +100,16 @@ def checkBotton(board, player)
                 count += 1
     return count == len(board[0])
 
+# Esta função verifica se todas as células do 'quadro' estão vazias.
+# Retorna True se todas as células estiverem vazias, caso contrário, False.
+def Grav(board):
+    countEmpty = (len(board) * len(board[0]))
+    for row in range(len(board)):
+        for col in range(len(board[0])):
+            if board[row][col] is not EMPTY:
+                countEmpty += 1
+    return countEmpty == 0
+
 
 def terminal(board):
     """
