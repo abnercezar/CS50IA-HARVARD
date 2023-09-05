@@ -79,6 +79,10 @@ def winner(board):
     else:
         return None
 
+def checkRows(board, player):
+    for row range(len(board[0])):
+        if board[row][col] == player:
+
 
 def terminal(board):
     """
