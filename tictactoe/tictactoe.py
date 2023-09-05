@@ -70,7 +70,7 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    raise NotImplementedError
+    if checkRows(board, x) or checkColums(board, x) or checkTopToBottonDiagonal(board, x) or checkTopToBottonDiagonal
 
 
 def terminal(board):
