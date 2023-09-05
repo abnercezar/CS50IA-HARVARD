@@ -78,7 +78,8 @@ def winner(board):
         return O
     else:
         return None
-
+# Esta função verifica se um jogador ganhou preenchendo uma linha inteira
+# no 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
 def checkRows(board, player):
     for row range(len(board[0])):
         count = 0
@@ -89,6 +90,8 @@ def checkRows(board, player):
             return True
     return false
 
+# Esta função verifica se um jogador ganhou preenchendo a diagonal do canto superior
+#  esquerdo ao canto inferior direito do 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
 def checkBotton(board, player)
     count = 0
     for row in range(len(board)):
