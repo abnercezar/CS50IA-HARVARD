@@ -54,6 +54,8 @@ def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
     """
+    # Este código valida uma ação, então cria uma cópia do 'tabuleiro',
+    # aplica a 'ação' para o 'jogador' atual e retorna o tabuleiro atualizado.
     (x, y) = action
 
     if x < 0 or x >= len(board) or y < 0 or y >= len(board[0]):
