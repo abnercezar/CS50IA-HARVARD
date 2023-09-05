@@ -24,7 +24,7 @@ def player(board):
     """
     # Este código conta as ocorrências de 'X' e 'O' em um 'quadro' de lista 2D,
     # retornando 'X' se as contagens forem iguais, caso contrário, 'O'.
-    
+
     countX = 0
     countO = 0
     for row in range(len(board)):
@@ -41,7 +41,10 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    raise NotImplementedError
+    possible_moves = set()
+    for row in range(len(board[0])):
+        if board[row][col] == EMPTY:
+            posssib
 
 
 def result(board, action):
