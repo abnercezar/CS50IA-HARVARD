@@ -59,6 +59,9 @@ def result(board, action):
         raise IndexError()
 
     actionArray = [row[:] for row in board]
+    actionArray[x][y] = player(board)
+
+    return actionArray
 
 def winner(board):
     """
