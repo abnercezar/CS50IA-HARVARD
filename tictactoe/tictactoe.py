@@ -47,11 +47,11 @@ def actions(board):
     """
     # Este código gera um conjunto de movimentos possíveis
     # verificando espaços vazios em cada linha do ‘tabuleiro’.
-    possible_moves = set()
-    for row in range(len(board[0])):
+    possible_actions = set()
+    for col in range(len(board)):
         if board[row][col] == EMPTY:
-            posssible_moves.add((row, col))
-    return possible_moves
+            posssible_actions.add((row, col))
+    return possible_actions
 
 
 def result(board, action):
