@@ -22,8 +22,9 @@ def player(board):
     """
     Returns player who has the next turn on a board.
     """
-    # Este código conta as ocorrências de 'X' e 'O' em um 'quadro' de lista 2D,
-    # retornando 'X' se as contagens forem iguais, caso contrário, 'O'.
+    # Este código conta o número de 'X' e 'O' em uma lista 2D chamada
+    # 'tabuleiro'. Se houver mais 'X' do que 'O', retorna 'O', caso contrário,
+    # retorna 'X'.
 
     countX = 0
     countO = 0
