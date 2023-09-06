@@ -34,7 +34,10 @@ def player(board):
             elif board[row][col] == O:
                 countO += 1
 
-    return X if countX == countO else O
+    if countX > countO:
+        return O
+    else:
+        return X
 
 
 def actions(board):
