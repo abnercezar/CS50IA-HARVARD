@@ -50,7 +50,8 @@ def actions(board):
     possible_actions = set()
     for row in range(len(board)):
         for col in range(len(board[0])):
-            if board[row][col] == EMPTY
+            if board[row][col] == EMPTY:
+                possible_actions.add((row, col))
 
 
 def result(board, action):
