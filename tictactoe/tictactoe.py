@@ -52,7 +52,7 @@ def actions(board):
         for col in range(len(board[0])):
             if board[row][col] == EMPTY:
                 possible_actions.add((row, col))
-                
+
     return possible_actions
 
 
@@ -62,15 +62,10 @@ def result(board, action):
     """
     # Este código valida uma ação, então cria uma cópia do 'tabuleiro',
     # aplica a 'ação' para o 'jogador' atual e retorna o tabuleiro atualizado.
-    (x, y) = action
-
-    if x < 0 or x >= len(board) or y < 0 or y >= len(board[0]):
-        raise IndexError()
-
-    actionArray = [row[:] for row in board]
-    actionArray[x][y] = player(board)
-
-    return actionArray
+    if action not in actions(board):
+        raise Exception("Not valid action")
+    row, col = action
+    board
 
 def winner(board):
     """
