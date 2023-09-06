@@ -28,7 +28,7 @@ def player(board):
     countX = 0
     countO = 0
     for row in range(len(board)):
-        for col in range(len(board[0])):
+        for col in range(len(board[row])):
             if board[row][col] == X:
                 countX += 1
             elif board[row][col] == O:
