@@ -70,10 +70,13 @@ def result(board, action):
     board_copy[row][col] = player(board)
     return board_copy
 
+
 def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
+    raise NotImplementedError
+
     # Este código verifica uma condição de vitória para 'X' ou 'O' nas linhas, colunas ou diagonais do
     # 'tabuleiro', retornando o vencedor ou Nenhum se não houver vencedor.
     if checkRows(board, x) or checkColums(board, X) or checkBotton(board, X) or checkBotton(board, X):
