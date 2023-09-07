@@ -14,8 +14,7 @@ def initial_state():
     """
     Returns starting state of the board.
     """
-    return [[EMPTY, EMPTY, EMPTY],
-            [EMPTY, EMPTY, EMPTY],  [EMPTY, EMPTY, EMPTY]]
+    return [[EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY]]
 
 
 def player(board):
@@ -70,12 +69,15 @@ def result(board, action):
     return board_copy
 
 
-
 # Esta função verifica se um jogador ganhou preenchendo uma linha inteira
 # no 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
 def checkRows(board, player):
     for row in range(len(board)):
-        if board[row][0] == player and board[row][1] == player and board[row][2] == player:
+        if (
+            board[row][0] == player
+            and board[row][1] == player
+            and board[row][2] == player
+        ):
             return True
     return False
 
@@ -84,9 +86,14 @@ def checkRows(board, player):
 # esquerdo ao canto inferior direito do 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
 def checkCol(board, player):
     for col in range(len(board)):
-        if board[0][col] == player and board[1][col] == player and board[2][col] == player:
+        if (
+            board[0][col] == player
+            and board[1][col] == player
+            and board[2][col] == player
+        ):
             return True
         return False
+
 
 # Esta função verifica se todas as células do 'quadro' estão vazias.
 # Retorna True se todas as células estiverem vazias, caso contrário, False.
@@ -101,6 +108,7 @@ def checkPrim(board, player):
     else:
         return False
 
+
 def checkSeg(board, player):
     count = 0
     for row in range(len(board)):
@@ -113,14 +121,23 @@ def checkSeg(board, player):
         return False
 
 
-
 def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    if checkRow(board, X) or checkCol(board, X) or checkPrim(board, X) or checkSeg(board, X):
+    if (
+        checkRow(board, X)
+        or checkCol(board, X)
+        or checkPrim(board, X)
+        or checkSeg(board, X)
+    ):
         return X
-    elif checkRow(board, X) or checkCol(board, X) or checkPrim(board, X) or checkSeg(board, X):
+    elif (
+        checkRow(board, X)
+        or checkCol(board, X)
+        or checkPrim(board, X)
+        or checkSeg(board, X)
+    ):
         return O
     else:
         return None
@@ -139,6 +156,7 @@ def terminal(board):
             return False
         return True
 
+
 def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
@@ -150,6 +168,7 @@ def utility(board):
     else:
         return 0
 
+
 def max_value(board):
     v = -math.inf
     if terminal(board):
@@ -158,7 +177,7 @@ def max_value(board):
         v = max(v, min_value(result(board, action)))
         return v
 
-print("Iniciando o jogo")
+
 def min_value(board):
     v = math.inf
     if terminal(board):
