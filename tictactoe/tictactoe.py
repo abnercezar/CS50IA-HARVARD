@@ -9,13 +9,13 @@ X = "X"
 O = "O"
 EMPTY = None
 
+
 def initial_state():
     """
     Returns starting state of the board.
     """
     return [[EMPTY, EMPTY, EMPTY],
-            [EMPTY, EMPTY, EMPTY],
-            [EMPTY, EMPTY, EMPTY]]
+            [EMPTY, EMPTY, EMPTY],  [EMPTY, EMPTY, EMPTY]]
 
 
 def player(board):
@@ -159,13 +159,13 @@ def max_value(board):
         return v
 
 print("Iniciando o jogo")
-    def min_value(board):
-        v = math.inf
-        if terminal(board):
-            return utility(board)
-        for action in actions(board):
-            v = min(v, max_value(result(board, action)))
-            return v
+def min_value(board):
+    v = math.inf
+    if terminal(board):
+        return utility(board)
+    for action in actions(board):
+        v = min(v, max_value(result(board, action)))
+        return v
 
 
 def minimax(board):
