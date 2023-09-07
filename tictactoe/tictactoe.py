@@ -83,7 +83,7 @@ def checkRows(board, player):
 
 # Esta função verifica se um jogador ganhou preenchendo a diagonal do canto superior
 # esquerdo ao canto inferior direito do 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
-def checkCol(board, player)
+def checkCol(board, player):
     for col in range(len(board)):
         if board[0][col] == player and board[1][col] == player and board[2][col] == player:
             return True
