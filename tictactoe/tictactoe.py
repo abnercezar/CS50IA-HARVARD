@@ -67,6 +67,8 @@ def result(board, action):
         raise Exception("Not valid action")
     row, col = action
     board_copy = copy.deepcoy(board)
+    board_copy[row][col] = player(board)
+    return board_copy
 
 def winner(board):
     """
