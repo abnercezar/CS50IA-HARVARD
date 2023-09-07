@@ -65,7 +65,7 @@ def result(board, action):
     if action not in actions(board):
         raise Exception("Not valid action")
     row, col = action
-    board
+    board_copy
 
 def winner(board):
     """
