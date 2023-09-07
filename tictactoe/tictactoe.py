@@ -178,7 +178,7 @@ def minimax(board):
     elif player(board) == X:
         for action in actions(board):
             plays.append([min_value(result(board, action)), action])
-        return sorted(plays, key=lamba x: x[0], reverse=True)[0][1]
+        return sorted(plays, key=lambda x: x[0], reverse=True)[0][1]
 
      elif player(board) == O:
         for action in actions(board):
