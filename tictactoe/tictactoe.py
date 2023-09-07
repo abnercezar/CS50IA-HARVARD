@@ -91,7 +91,7 @@ def checkCol(board, player)
 
 # Esta função verifica se todas as células do 'quadro' estão vazias.
 # Retorna True se todas as células estiverem vazias, caso contrário, False.
-def grav(board, player):
+def checkPrim(board, player):
     count = 0
     for row in range(len(board)):
         for col in range(len(board[row])):
@@ -101,6 +101,9 @@ def grav(board, player):
         return True
     else:
         return False
+
+def checkSeg(board, player):
+    count = 0
 
 
 def winner(board):
