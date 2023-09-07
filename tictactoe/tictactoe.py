@@ -75,12 +75,8 @@ def result(board, action):
 # Esta função verifica se um jogador ganhou preenchendo uma linha inteira
 # no 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
 def checkRows(board, player):
-    for row range(len(board[0])):
-        count = 0
-        for col in range(len(board[0])):
-            if board[row][col] == player:
-                count += 1
-        if count == len(board[0]):
+    for row in range(len(board)):
+        if board[row][0] == player and board[row][1] == player and board[row][2] == player:
             return True
     return false
 
