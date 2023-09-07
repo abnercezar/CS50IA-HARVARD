@@ -89,6 +89,19 @@ def checkCol(board, player)
             return True
         return False
 
+# Esta função verifica se todas as células do 'quadro' estão vazias.
+# Retorna True se todas as células estiverem vazias, caso contrário, False.
+def grav(board, player):
+    count = 0
+    for row in range(len(board)):
+        for col in range(len(board[row])):
+            if row == col and board[row][col] == player:
+                count += 1
+    if count == 3:
+        return True
+    else:
+        return False
+
 
 def winner(board):
     """
@@ -97,15 +110,6 @@ def winner(board):
     raise NotImplementedError
 
 
-# Esta função verifica se todas as células do 'quadro' estão vazias.
-# Retorna True se todas as células estiverem vazias, caso contrário, False.
-def grav(board):
-    countEmpty = (len(board) * len(board[0]))
-    for row in range(len(board)):
-        for col in range(len(board[0])):
-            if board[row][col] is not EMPTY:
-                countEmpty += 1
-    return countEmpty == 0
 
 
 def terminal(board):
