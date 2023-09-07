@@ -71,20 +71,7 @@ def result(board, action):
     return board_copy
 
 
-def winner(board):
-    """
-    Returns the winner of the game, if there is one.
-    """
-    raise NotImplementedError
 
-    # Este código verifica uma condição de vitória para 'X' ou 'O' nas linhas, colunas ou diagonais do
-    # 'tabuleiro', retornando o vencedor ou Nenhum se não houver vencedor.
-    if checkRows(board, x) or checkColums(board, X) or checkBotton(board, X) or checkBotton(board, X):
-        return X
-    elif checkRows(board, O) or checkColums(board, O) or checkBotton(board, O) or checkBotton(board, O):
-        return O
-    else:
-        return None
 # Esta função verifica se um jogador ganhou preenchendo uma linha inteira
 # no 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
 def checkRows(board, player):
@@ -96,6 +83,13 @@ def checkRows(board, player):
         if count == len(board[0]):
             return True
     return false
+
+
+def winner(board):
+    """
+    Returns the winner of the game, if there is one.
+    """
+    raise NotImplementedError
 
 # Esta função verifica se um jogador ganhou preenchendo a diagonal do canto superior
 # esquerdo ao canto inferior direito do 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
