@@ -104,6 +104,9 @@ def checkPrim(board, player):
 
 def checkSeg(board, player):
     count = 0
+    for row in range(len(board)):
+        for col in range(len(board[row])):
+            if (len(board) - row - 1 == col)
 
 
 def winner(board):
