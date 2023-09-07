@@ -9,7 +9,6 @@ X = "X"
 O = "O"
 EMPTY = None
 
-
 def initial_state():
     """
     Returns starting state of the board.
@@ -159,6 +158,7 @@ def max_value(board):
         v = max(v, min_value(result(board, action)))
         return v
 
+print("Iniciando o jogo")
     def min_value(board):
         v = math.inf
         if terminal(board):
@@ -179,7 +179,7 @@ def minimax(board):
         for action in actions(board):
             plays.append([min_value(result(board, action)), action])
         return sorted(plays, key=lambda x: x[0], reverse=True)[0][1]
-    
+
     elif player(board) == O:
         for action in actions(board):
             plays.append([max_value(result(board, action)), action])
