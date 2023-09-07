@@ -78,7 +78,16 @@ def checkRows(board, player):
     for row in range(len(board)):
         if board[row][0] == player and board[row][1] == player and board[row][2] == player:
             return True
-    return false
+    return False
+
+
+# Esta função verifica se um jogador ganhou preenchendo a diagonal do canto superior
+# esquerdo ao canto inferior direito do 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
+def checkCol(board, player)
+    for col in range(len(board)):
+        if board[0][col] == player and board[1][col] == player and board[2][col] == player:
+            return True
+        return False
 
 
 def winner(board):
@@ -87,15 +96,6 @@ def winner(board):
     """
     raise NotImplementedError
 
-# Esta função verifica se um jogador ganhou preenchendo a diagonal do canto superior
-# esquerdo ao canto inferior direito do 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
-def checkBotton(board, player)
-    count = 0
-    for row in range(len(board)):
-        for col in range(len(board[0])):
-            if row == col and board[row][col] == player:
-                count += 1
-    return count == len(board[0])
 
 # Esta função verifica se todas as células do 'quadro' estão vazias.
 # Retorna True se todas as células estiverem vazias, caso contrário, False.
