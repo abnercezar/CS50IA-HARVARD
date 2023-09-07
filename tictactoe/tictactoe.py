@@ -106,7 +106,13 @@ def checkSeg(board, player):
     count = 0
     for row in range(len(board)):
         for col in range(len(board[row])):
-            if (len(board) - row - 1 == col)
+            if (len(board) - row - 1) == col and board[row][col] == player:
+                count += 1
+    if count == 3:
+        return True
+    else:
+        return False
+
 
 
 def winner(board):
