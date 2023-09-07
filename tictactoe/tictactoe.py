@@ -131,7 +131,13 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    raise NotImplementedError
+    if winner(board) == X:
+        return True
+    if winner(board) == O:
+        return True
+    for row in range(len(board[row])):
+        if board[row][col] == EMPTY:
+            return False
 
 def utility(board):
     """
