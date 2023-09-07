@@ -174,3 +174,7 @@ def minimax(board):
     """
     if terminal(board):
         return None
+
+    elif player(board) == X:
+        for action in actions(board):
+            plays.append([min_value(board, action)])
