@@ -119,31 +119,25 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    raise NotImplementedError
-
-
+    if checkRow(board, X) or checkCol(board, X) or checkPrim(board, X) or checkSeg(board, X):
+        return X
+    elif checkRow(board, X) or checkCol(board, X) or checkPrim(board, X) or checkSeg(board, X):
+        return O
+    else:
+        return None
 
 
 def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    if winner(board) or grav(board):
-        return True
-    else:
-        return false
-
+    raise NotImplementedError
 
 def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
-    if winner(board) == X:
-        return 1
-    elif winner(board) == O:
-        return -1
-    else:
-        return 0
+    raise NotImplementedError
 
 
 def minimax(board):
