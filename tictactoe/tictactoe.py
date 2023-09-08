@@ -40,7 +40,7 @@ def player(board):
         return X
 
 
-def actions(board):
+""" def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
@@ -203,3 +203,4 @@ def minimax(board):
         for action in actions(board):
             plays.append([max_value(result(board, action)), action])
         return sorted(plays, key=lambda x: x[0])[0][1]
+ """
