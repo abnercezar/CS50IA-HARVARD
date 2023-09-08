@@ -127,7 +127,10 @@ def checkSeg(board, player):
     else:
         return False
 
-
+# Esta função verifica se há um vencedor em um jogo.
+# Verifica linhas, colunas e ambas as diagonais de cada jogador (X e O).
+# Se encontrar um vencedor, devolve a marca do jogador vencedor.
+# Se não houver vencedor, ele retornará vazio.
 def winner(board):
     """
     Returns the winner of the game, if there is one.
