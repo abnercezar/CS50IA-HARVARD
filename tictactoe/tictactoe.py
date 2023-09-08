@@ -204,4 +204,3 @@ def minimax(board):
             plays.append([max_value(result(board, action)), action])
         return sorted(plays, key=lambda x: x[0])[0][1]
 
-pdb.set_trace()"""  """
