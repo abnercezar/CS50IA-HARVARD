@@ -64,7 +64,6 @@ def result(board, action):
     if action not in actions(board):
         raise Exception("Not valid action")
     row, col = action
-pdb.set_trace()
     board_copy = copy.deepcoy(board)
     board_copy[row][col] = player(board)
     return board_copy
@@ -204,3 +203,5 @@ def minimax(board):
         for action in actions(board):
             plays.append([max_value(result(board, action)), action])
         return sorted(plays, key=lambda x: x[0])[0][1]
+
+pdb.set_trace()"""  """
