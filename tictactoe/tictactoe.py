@@ -185,7 +185,8 @@ def utility(board):
     else:
         return 0
 
-
+# Esta função max_value(board) calcula o valor máximo possível para o
+# jogador atual em um algoritmo Minimax para um jogo de tabuleiro.
 def max_value(board):
     v = -math.inf
     if terminal(board):
@@ -195,6 +196,8 @@ def max_value(board):
         return v
 
 
+# Esta função min_value(board) calcula o valor mínimo possível para o
+# jogador adversário em um algoritmo Minimax para um jogo de tabuleiro.
 def min_value(board):
     v = math.inf
     if terminal(board):
@@ -202,7 +205,6 @@ def min_value(board):
     for action in actions(board):
         v = min(v, max_value(result(board, action)))
         return v
-
 
 def minimax(board):
     """
