@@ -97,7 +97,7 @@ def checkCol(board, player):
 
 # Esta função verifica uma condição de vitória no jogo,
 # verificando se um jogador tem três de suas marcas em uma linha diagonal
-# do canto superior esquerdo ao canto inferior direito do tabuleiro de jogo.
+# do canto superior esquerdo ao canto inferior direito do tabuleiro do jogo.
 # Se o fizerem, a função retornará True, indicando uma vitória para aquele jogador.
 # Caso contrário, retorna False.
 def checkPrim(board, player):
@@ -111,7 +111,11 @@ def checkPrim(board, player):
     else:
         return False
 
-
+# Esta função verifica uma condição de vitória no jogo.
+# Verifica se um jogador tem três de suas marcas em uma linha diagonal
+# do canto inferior esquerdo ao canto superior direito do tabuleiro do jogo.
+# Se o fizerem, a função retornará True, indicando uma vitória para aquele jogador.
+# Caso contrário, retorna False.
 def checkSeg(board, player):
     count = 0
     for row in range(len(board)):
