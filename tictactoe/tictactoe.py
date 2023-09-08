@@ -26,7 +26,7 @@ def player(board):
     # 'tabuleiro'. Se houver mais 'X' do que 'O', retorna 'O', caso contrário,
     # retorna 'X'.
 
-pdb.set_trace()
+    pdb.set_trace()
     countX = 0
     countO = 0
     for row in range(len(board)):
