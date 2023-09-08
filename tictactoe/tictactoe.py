@@ -95,8 +95,8 @@ def checkCol(board, player):
         return False
 
 
-# Esta função verifica se todas as células do 'quadro' estão vazias.
-# Retorna True se todas as células estiverem vazias, caso contrário, False.
+
+
 def checkPrim(board, player):
     count = 0
     for row in range(len(board)):
