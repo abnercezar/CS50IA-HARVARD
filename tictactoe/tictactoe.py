@@ -2,8 +2,8 @@
 Tic Tac Toe Player
 """
 
-import math
 import copy
+import math
 import pdb
 
 X = "X"
