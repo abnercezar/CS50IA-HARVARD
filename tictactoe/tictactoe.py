@@ -206,6 +206,8 @@ def min_value(board):
         v = min(v, max_value(result(board, action)))
         return v
 
+# Esta função minimax(board) retorna a ação ótima para o jogador atual no tabuleiro,
+# usando o algoritmo Minimax. 
 def minimax(board):
     """
     Returns the optimal action for the current player on the board.
