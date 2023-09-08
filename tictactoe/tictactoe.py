@@ -165,10 +165,10 @@ def terminal(board):
         return True
     if winner(board) == O:
         return True
-    for row in range(len(board[row])):
+    for row in range(len(board)):
         if board[row][col] == EMPTY:
             return False
-        return True
+    return True
 
 # Esta função é usada para avaliar o estado do tabuleiro de jogo.
 # Se o jogador X ganhou, retorna 1. Se o jogador O ganhou, retorna -1.
