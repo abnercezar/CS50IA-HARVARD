@@ -4,6 +4,7 @@ Tic Tac Toe Player
 
 import math
 import copy
+import pdb
 
 X = "X"
 O = "O"
@@ -38,7 +39,7 @@ def player(board):
         return O
     else:
         return X
-
+pdb.set_trace()
 
 def actions(board):
     """
