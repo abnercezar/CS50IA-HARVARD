@@ -39,7 +39,6 @@ def player(board):
         return O
     else:
         return X
-pdb.set_trace()
 
 def actions(board):
     """
@@ -65,6 +64,7 @@ def result(board, action):
     if action not in actions(board):
         raise Exception("Not valid action")
     row, col = action
+pdb.set_trace()
     board_copy = copy.deepcoy(board)
     board_copy[row][col] = player(board)
     return board_copy
