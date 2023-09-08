@@ -170,7 +170,10 @@ def terminal(board):
             return False
         return True
 
-
+# Esta função é usada para avaliar o estado do tabuleiro de jogo.
+# Se o jogador X ganhou, retorna 1. Se o jogador O ganhou, retorna -1.
+# Se não houver vencedor, ele retornará 0. Isso normalmente é usado em algoritmos
+# de jogos para determinar o valor de um estado específico do jogo.
 def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
