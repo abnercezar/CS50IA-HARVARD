@@ -92,7 +92,7 @@ def checkCols(board, player):
             and board[2][col] == player
         ):
             return True
-        return False
+    return False
 
 
 # Esta função verifica uma condição de vitória no jogo,
