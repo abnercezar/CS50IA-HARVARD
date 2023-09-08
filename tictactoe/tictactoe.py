@@ -116,7 +116,7 @@ def checkPrimary(board, player):
 # do canto inferior esquerdo ao canto superior direito do tabuleiro do jogo.
 # Se o fizerem, a função retornará True, indicando uma vitória para aquele jogador.
 # Caso contrário, retorna False.
-def checkSeg(board, player):
+def checkSecond(board, player):
     count = 0
     for row in range(len(board)):
         for col in range(len(board[row])):
@@ -139,14 +139,14 @@ def winner(board):
         checkRows(board, X)
         or checkCols(board, X)
         or checkPrimary(board, X)
-        or checkSeg(board, X)
+        or checkSecond(board, X)
     ):
         return X
     elif (
         checkRows(board, X)
         or checkCols(board, X)
         or checkPrimary(board, X)
-        or checkSeg(board, X)
+        or checkSecond(board, X)
     ):
         return O
     else:
