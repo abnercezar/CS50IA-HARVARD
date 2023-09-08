@@ -152,7 +152,11 @@ def winner(board):
     else:
         return None
 
-
+# Esta função verifica se o jogo acabou.
+# Isso é feito verificando se há um vencedor ou se todas as células do tabuleiro estão preenchidas.
+# Se houver um vencedor ou nenhuma célula vazia, retornará True,
+# indicando que o jogo acabou. Se ainda houver células vazias e nenhum vencedor,
+# retornará False, indicando que o jogo não acabou.
 def terminal(board):
     """
     Returns True if game is over, False otherwise.
