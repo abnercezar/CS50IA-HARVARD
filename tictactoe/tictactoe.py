@@ -4,7 +4,7 @@ Tic Tac Toe Player
 
 import copy
 import math
-import pdb
+import paygame
 
 X = "X"
 O = "O"
