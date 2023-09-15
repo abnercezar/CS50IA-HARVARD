@@ -64,7 +64,7 @@ def result(board, action):
     if action not in actions(board):
         raise Exception("Not valid action")
     row, col = action
-    board_copy = copy.deepcoy(board)
+    board_copy = copy.deepcopy(board)
     board_copy[row][col] = player(board)
     return board_copy
 
