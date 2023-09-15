@@ -143,10 +143,10 @@ def winner(board):
     ):
         return X
     elif (
-        checkRows(board, X)
-        or checkCols(board, X)
-        or checkPrimary(board, X)
-        or checkSecond(board, X)
+        checkRows(board, O)
+        or checkCols(board, O)
+        or checkPrimary(board, O)
+        or checkSecond(board, O)
     ):
         return O
     else:
