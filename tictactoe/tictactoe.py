@@ -227,3 +227,18 @@ def minimax(board):
             plays.append([max_value(result(board, action)), action])
         return sorted(plays, key=lambda x: x[0])[0][1]
 
+
+
+
+    import pygame
+    pygame.init()
+    screen = pygame.display.set_mode((640, 480))
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        pygame.display.flip()
+    pygame.quit()
+
+
