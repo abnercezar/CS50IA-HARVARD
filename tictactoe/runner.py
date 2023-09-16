@@ -28,8 +28,7 @@ while True:
             sys.exit()
 
     screen.fill(black)
-    pygame.draw.rect(screen, white, playAgainButton)
-    tela.blit(playAgainText, playAgainRect)
+
     # Let user choose a player.
     if user is None:
 
