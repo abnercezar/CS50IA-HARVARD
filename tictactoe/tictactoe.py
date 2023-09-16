@@ -194,7 +194,7 @@ def max_value(board):
         return utility(board)
     for action in actions(board):
         v = max(v, min_value(result(board, action)))
-        return v
+    return v
 
 
 # Esta função min_value(board) calcula o valor mínimo possível para o
@@ -205,7 +205,7 @@ def min_value(board):
         return utility(board)
     for action in actions(board):
         v = min(v, max_value(result(board, action)))
-        return v
+    return v
 
 # Esta função minimax(board) retorna a ação ótima para o jogador atual no tabuleiro,
 # usando o algoritmo Minimax.
