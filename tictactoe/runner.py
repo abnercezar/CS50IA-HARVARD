@@ -1,4 +1,4 @@
-""" import pygame
+import pygame
 import sys
 import time
 
@@ -144,4 +144,3 @@ while True:
                     ai_turn = False
 
     pygame.display.flip()
- """
