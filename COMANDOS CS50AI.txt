@@ -1,0 +1,15 @@
+COMANDOS CS50AI
+
+PARA DEBUGAR CÓDIGOS EM PYTHON
+
+No incio do código insira "import pdb" e para interrupção e debug adicione "pdb.set_trace()"
+
+No terminal execute "python runner.py"
+
+você pode usar o comando "n"(next) para executar a próxima linha de código, "s"(step) para entrar em uma função, "r"(return) para continuar a execução até a função atual retornar, e "c"(continue) para continuar a execução até o próximo ponto de interrupção ou até o final do programa.
+
+Você também pode usar o comando "p"(print) seguido de um nome de variável para imprimir o valor dessa variável. Por exemplo, "p board" você irá imprimir o valor atual de board.
+
+Para sair "q(quit)"
+
+Lembre-se de que você pode digitar "help" a qualquer momento para obter uma lista de todos os comandos disponíveis.
