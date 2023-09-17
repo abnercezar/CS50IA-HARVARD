@@ -203,6 +203,15 @@ def get_possible_moves(board):
                 possible_moves.append((row, col))
     return possible_moves
 
+def get_possible_moves(board):
+    # Código para calcular os movimentos possíveis
+    possible_moves = []
+    for row in range(len(board)):
+        for col in range(len(board[row])):
+            if board[row][col] == '':
+                possible_moves.append((row, col))
+    return possible_moves
+
 def make_move(board, move):
     current_player = "X"
     new_board = board.copy()
