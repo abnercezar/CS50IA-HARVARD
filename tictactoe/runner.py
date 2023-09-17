@@ -1,10 +1,10 @@
-import pygame
+""" import pygame
 import sys
 import time
 
 import tictactoe as ttt
 
-pygame.init()
+pygame.display.init()
 size = width, height = 600, 400
 
 # Colors
@@ -13,6 +13,7 @@ white = (255, 255, 255)
 
 screen = pygame.display.set_mode(size)
 
+pygame.font.init()
 mediumFont = pygame.font.Font("OpenSans-Regular.ttf", 28)
 largeFont = pygame.font.Font("OpenSans-Regular.ttf", 40)
 moveFont = pygame.font.Font("OpenSans-Regular.ttf", 60)
@@ -144,3 +145,21 @@ while True:
                     ai_turn = False
 
     pygame.display.flip()
+ """
+
+import pygame
+pygame.init()
+
+win = pygame.display.set_mode((500, 500))
+
+run = True
+while run:
+    pygame.time.delay(100)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+
+    pygame.display.update()
+
+pygame.quit()
