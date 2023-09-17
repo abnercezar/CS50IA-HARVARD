@@ -97,14 +97,24 @@ def checkRows(board, player):
 # Esta função verifica se um jogador ganhou preenchendo a diagonal do canto superior
 # esquerdo ao canto inferior direito do 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
 def checkDiagonals(board, player):
-    count1 = 0
-    count2 = 0
-    for i in range(len(board)):
-        if board[i][i] == player:
-            count1 += 1
-        if board[i][len(board) - 1 - i] == player:
-            count2 += 1
-    return count1 == len(board) or count2 == len(board)
+
+    # Verifique a diagonal principal
+    if board[0][0] == player and board[1][1] == player and board[2][2] == player:
+        return True
+
+    # Verifique a diagonal secundária
+    if board[0][2] == player and board[1][1] == player and board[2][0] == player:
+        return True
+
+    # Verifique linhas diagonais adicionais
+    if board[0][1] == player and board[1][2] == player and board[2][0] == player:
+        return True
+
+    if board[0][0] == player and board[1][2] == player and board[2][1] == player:
+        return True
+
+    # Adicione mais verificações diagonais, se necessário
+    return False
 
 # Esta função verifica se um jogador ganhou preenchendo as colunas
 def checkColumns(board, player):
@@ -127,13 +137,67 @@ def grav(board):
                 countEmpty -= 1
     return countEmpty == 0
 
+
+
+
+def minimax(board):
+    """
+    Returns the optimal action for the current player on the board.
+    """
+    if terminal(board):
+        return best_move
+    best_score = float('-infinity')
+    best_move = None
+
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == EMPTY:
+                board_copy = copy.deepcopy(board)
+                board_copy[i][j] = player(board)
+                score = minimax_helper(board_copy, False)
+                if score > best_score:
+                    best_score = score
+                    best_move = (i, j)
+    return best_move
+
+possible_moves = None
+
 # A função terminal deve aceitar a board como entrada e retornar
 # um valor booleano indicando se o jogo acabou.
 def terminal(board):
-    """
-    Returns True if game is over, False otherwise.
-    """
-    return winner(board) or grav(board)
+    # Verifique se o jogo acabou (vitória, empate ou em andamento)
+    if check_winner(board):
+        return True
+    if is_board_full(board):
+        return True
+    return False
+
+def is_board_full(board):
+    # Verifique se o tabuleiro está cheio (condição de sorteio)
+    for row in board:
+        for cell in row:
+            if cell == EMPTY:
+                return False
+    return True
+
+# Verifique as linhas
+def check_winner(board):
+    for row in board:
+        if row[0] == row[1] == row[2] != EMPTY:
+            return row[0]
+
+    #Verifique as colunas
+    for col in range(3):
+        if board[0][col] == board[1][col] == board[2][col] != EMPTY:
+            return board[0][col]
+
+    # Check diagonals
+    if board[0][0] == board[1][1] == board[2][2] != EMPTY:
+        return board[0][0]
+    if board[0][2] == board[1][1] == board[2][0] != EMPTY:
+        return board[0][2]
+
+    return None
 
 # A função utility deve aceitar um terminal placa
 # como entrada e saída da utilidade da placa.
@@ -151,46 +215,24 @@ def utility(board):
         return 0
 
 
-def minimax(board):
-    """
-    Returns the optimal action for the current player on the board.
-    """
-    if terminal(board):
-        return None
-    best_score = float('-infinity')
-    best_move = None
-
-    for i in range(3):
-        for j in range(3):
-            if board[i][j] == EMPTY:
-                board_copy = copy.deepcopy(board)
-                board_copy[i][j] = player(board)
-                score = minimax_helper(board_copy, False)
-                if score > best_score:
-                    best_score = score
-                    best_move = (i, j)
-    return best_move
-
-possible_moves = None
-
 def minimax_helper(board, is_maximizing):
     if terminal(board):
         return utility(board)
 
     if is_maximizing:
-        best_score = float('-inf')
-        possible_moves = get_possible_moves(board)
-        for move in possible_moves:
-            board_copy = make_move(score, best_score)
-            score = minimax_helper(new_board_after_move, False)
-            best_score = max(score, best_score)
-        return best_score
-    else:
-        best_score = float('inf')
+        best_score = float('-infinity')
         possible_moves = get_possible_moves(board)
         for move in possible_moves:
             board_copy = make_move(board, move)
-            score = minimax_helper(board_copy, True)
+            score = minimax_helper(board_copy, False)
+            best_score = max(score, best_score)
+        return best_score
+    else:
+        best_score = float('infinity')
+        possible_moves = get_possible_moves(board)
+        for move in possible_moves:
+            board_copy = make_move(board, move)
+            score = minimax_helper(board_copy, not is_maximizing)
             best_score = min(score, best_score)
         return best_score
 
@@ -199,12 +241,12 @@ def get_possible_moves(board):
     possible_moves = []
     for row in range(len(board)):
         for col in range(len(board[row])):
-            if board[row][col] == '':
+            if board[row][col] == EMPTY:
                 possible_moves.append((row, col))
     return possible_moves
 
 def make_move(board, move):
-    current_player = "X"
+    current_player = player(board)
     new_board = board.copy()
-    new_board[move] = current_player
+    new_board[move[0]][move[1]] = current_player
     return new_board
