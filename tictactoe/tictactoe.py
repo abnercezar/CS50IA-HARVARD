@@ -171,25 +171,37 @@ def minimax(board):
                     best_move = (i, j)
     return best_move
 
+possible_moves = None
+
 def minimax_helper(board, is_maximizing):
     if terminal(board):
         return utility(board)
 
     if is_maximizing:
-        possible_moves = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         best_score = float('-inf')
-        new_board_after_move = make_move(board, move)
-        for move in possible_moves(board):
+        possible_moves = get_possible_moves(board)
+        for move in possible_moves:
+            board_copy = make_move(score, best_score)
             score = minimax_helper(new_board_after_move, False)
             best_score = max(score, best_score)
         return best_score
     else:
-        best_score = ('inf')
-        for move in possible_moves(board):
-            new_board_after_move = make_move(board, move)
-            score = minimax_helper(new_board_after_move, True)
+        best_score = float('inf')
+        possible_moves = get_possible_moves(board)
+        for move in possible_moves:
+            board_copy = make_move(board, move)
+            score = minimax_helper(board_copy, True)
             best_score = min(score, best_score)
         return best_score
+
+def get_possible_moves(board):
+    # Código para calcular os movimentos possíveis
+    possible_moves = []
+    for row in range(len(board)):
+        for col in range(len(board[row])):
+            if board[row][col] == '':
+                possible_moves.append((row, col))
+    return possible_moves
 
 def make_move(board, move):
     current_player = "X"
