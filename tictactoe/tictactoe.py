@@ -2,9 +2,8 @@
 Tic Tac Toe Player
 """
 
-import copy
 import math
-
+import copy
 
 X = "X"
 O = "O"
@@ -15,16 +14,17 @@ def initial_state():
     """
     Returns starting state of the board.
     """
-    return [[EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY]]
+    return [[EMPTY, EMPTY, EMPTY],
+            [EMPTY, EMPTY, EMPTY],
+            [EMPTY, EMPTY, EMPTY]]
 
 
 def player(board):
     """
     Returns player who has the next turn on a board.
     """
-    # Este código conta o número de 'X' e 'O' em uma lista 2D chamada
-    # 'tabuleiro'. Se houver mais 'X' do que 'O', retorna 'O', caso contrário,
-    # retorna 'X'.
+    # A função player deve receber uma entrada e
+    # retorna de quem é a vez do jogador X ou O
 
     countX = 0
     countO = 0
@@ -39,6 +39,7 @@ def player(board):
         return O
     else:
         return X
+
 
 def actions(board):
     """
@@ -63,118 +64,81 @@ def result(board, action):
     # aplica a 'ação' para o 'jogador' atual e retorna o tabuleiro atualizado.
     if action not in actions(board):
         raise Exception("Not valid action")
+    new_board = [row[:] for row in board]
     row, col = action
-    board_copy = copy.deepcopy(board)
-    board_copy[row][col] = player(board)
-    return board_copy
+    new_board[row][col] = player(board)
+    return new_board
 
-
-# Esta função verifica se um jogador ganhou preenchendo uma linha inteira
-# no 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
-def checkRows(board, player):
-    for row in range(len(board)):
-        if (
-            board[row][0] == player
-            and board[row][1] == player
-            and board[row][2] == player
-        ):
-            return True
-    return False
-
-
-# Esta função verifica se um jogador ganhou preenchendo a diagonal do canto superior
-# esquerdo ao canto inferior direito do 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
-def checkCols(board, player):
-    for col in range(len(board)):
-        if (
-            board[0][col] == player
-            and board[1][col] == player
-            and board[2][col] == player
-        ):
-            return True
-    return False
-
-
-# Esta função verifica uma condição de vitória no jogo,
-# verificando se um jogador tem três de suas marcas em uma linha diagonal
-# do canto superior esquerdo ao canto inferior direito do tabuleiro do jogo.
-# Se o fizerem, a função retornará True, indicando uma vitória para aquele jogador.
-# Caso contrário, retorna False.
-def checkPrimary(board, player):
-    count = 0
-    for row in range(len(board)):
-        for col in range(len(board[row])):
-            if row == col and board[row][col] == player:
-                count += 1
-    if count == 3:
-        return True
-    else:
-        return False
-
-# Esta função verifica uma condição de vitória no jogo.
-# Verifica se um jogador tem três de suas marcas em uma linha diagonal
-# do canto inferior esquerdo ao canto superior direito do tabuleiro do jogo.
-# Se o fizerem, a função retornará True, indicando uma vitória para aquele jogador.
-# Caso contrário, retorna False.
-def checkSecond(board, player):
-    count = 0
-    for row in range(len(board)):
-        for col in range(len(board[row])):
-            if (len(board) - row - 1) == col and board[row][col] == player:
-                count += 1
-    if count == 3:
-        return True
-    else:
-        return False
-
-# Esta função verifica se há um vencedor em um jogo.
-# Verifica linhas, colunas e ambas as diagonais de cada jogador (X e O).
-# Se encontrar um vencedor, devolve a marca do jogador vencedor.
-# Se não houver vencedor, ele retornará vazio.
 def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    if (
-        checkRows(board, X)
-        or checkCols(board, X)
-        or checkPrimary(board, X)
-        or checkSecond(board, X)
-    ):
-        return X
-    elif (
-        checkRows(board, O)
-        or checkCols(board, O)
-        or checkPrimary(board, O)
-        or checkSecond(board, O)
-    ):
-        return O
+    # Este código verifica uma condição de vitória para 'X' ou 'O' nas linhas, colunas ou diagonais do
+    # 'tabuleiro', retornando o vencedor ou Nenhum se não houver vencedor.
+    if checkRows(board, 'X') or checkColumns(board, 'X') or checkDiagonals(board, 'X'):
+        return 'X'
+    elif checkRows(board, 'O') or checkColumns(board, 'O') or checkDiagonals(board, 'O'):
+        return 'O'
     else:
         return None
 
-# Esta função verifica se o jogo acabou.
-# Isso é feito verificando se há um vencedor ou se todas as células do tabuleiro estão preenchidas.
-# Se houver um vencedor ou nenhuma célula vazia, retornará True,
-# indicando que o jogo acabou. Se ainda houver células vazias e nenhum vencedor,
-# retornará False, indicando que o jogo não acabou.
+# Esta função verifica se um jogador ganhou preenchendo uma linha inteira
+# no 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
+def checkRows(board, player):
+    for row in range(len(board[0])):
+        count = 0
+        for col in range(len(board[0])):
+            if board[row][col] == player:
+                count += 1
+        if count == len(board[0]):
+            return True
+    return False
+
+# Esta função verifica se um jogador ganhou preenchendo a diagonal do canto superior
+# esquerdo ao canto inferior direito do 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
+def checkDiagonals(board, player):
+    count1 = 0
+    count2 = 0
+    for i in range(len(board)):
+        if board[i][i] == player:
+            count1 += 1
+        if board[i][len(board) - 1 - i] == player:
+            count2 += 1
+    return count1 == len(board) or count2 == len(board)
+
+# Esta função verifica se um jogador ganhou preenchendo as colunas
+def checkColumns(board, player):
+    for col in range(len(board[0])):
+        count = 0
+        for row in range(len(board[0])):
+            if board[row][col] == player:
+                count += 1
+        if count == len(board):
+            return True
+    return False
+
+# Esta função verifica se todas as células do 'quadro' estão vazias.
+# Retorna True se todas as células estiverem vazias, caso contrário, False.
+def grav(board):
+    countEmpty = len(board) * len(board[0])
+    for row in range(len(board)):
+        for col in range(len(board[0])):
+            if board[row][col] is not EMPTY:
+                countEmpty -= 1
+    return countEmpty == 0
+
+# A função terminal deve aceitar a board como entrada e retornar
+# um valor booleano indicando se o jogo acabou.
 def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    if winner(board) == X:
-        return True
-    if winner(board) == O:
-        return True
-    for row in range(len(board)):
-        for col in range(len(board[row])):
-            if board[row][col] == EMPTY:
-                return False
-    return True
+    return winner(board) or grav(board)
 
-# Esta função é usada para avaliar o estado do tabuleiro de jogo.
-# Se o jogador X ganhou, retorna 1. Se o jogador O ganhou, retorna -1.
-# Se não houver vencedor, ele retornará 0. Isso normalmente é usado em algoritmos
-# de jogos para determinar o valor de um estado específico do jogo.
+# A função utility deve aceitar um terminal placa
+# como entrada e saída da utilidade da placa.
+# Ela retorna 1 se o jogador X ganhou o jogo, -1 se o jogador
+# O ganhou o jogo ou 0 caso contrário.
 def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
@@ -186,44 +150,49 @@ def utility(board):
     else:
         return 0
 
-# Esta função max_value(board) calcula o valor máximo possível para o
-# jogador atual em um algoritmo Minimax para um jogo de tabuleiro.
-def max_value(board):
-    v = -math.inf
-    if terminal(board):
-        return utility(board)
-    for action in actions(board):
-        v = max(v, min_value(result(board, action)))
-    return v
 
-
-# Esta função min_value(board) calcula o valor mínimo possível para o
-# jogador adversário em um algoritmo Minimax para um jogo de tabuleiro.
-def min_value(board):
-    v = math.inf
-    if terminal(board):
-        return utility(board)
-    for action in actions(board):
-        v = min(v, max_value(result(board, action)))
-    return v
-
-# Esta função minimax(board) retorna a ação ótima para o jogador atual no tabuleiro,
-# usando o algoritmo Minimax.
 def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    plays = [] # inicializa a lista de jogadas
     if terminal(board):
         return None
+    best_score = float('-infinity')
+    best_move = None
 
-    elif player(board) == X:
-        for action in actions(board):
-            plays.append([min_value(result(board, action)), action])
-        return sorted(plays, key=lambda x: x[0], reverse=True)[0][1]
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == EMPTY:
+                board_copy = copy.deepcopy(board)
+                board_copy[i][j] = player(board)
+                score = minimax_helper(board_copy, False)
+                if score > best_score:
+                    best_score = score
+                    best_move = (i, j)
+    return best_move
 
-    elif player(board) == O:
-        for action in actions(board):
-            plays.append([max_value(result(board, action)), action])
-        return sorted(plays, key=lambda x: x[0])[0][1]
+def minimax_helper(board, is_maximizing):
+    if terminal(board):
+        return utility(board)
 
+    if is_maximizing:
+        possible_moves = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        best_score = float('-inf')
+        new_board_after_move = make_move(board, move)
+        for move in possible_moves(board):
+            score = minimax_helper(new_board_after_move, False)
+            best_score = max(score, best_score)
+        return best_score
+    else:
+        best_score = ('inf')
+        for move in possible_moves(board):
+            new_board_after_move = make_move(board, move)
+            score = minimax_helper(new_board_after_move, True)
+            best_score = min(score, best_score)
+        return best_score
+
+def make_move(board, move):
+    current_player = "X"
+    new_board = board.copy()
+    new_board[move] = current_player
+    return new_board
