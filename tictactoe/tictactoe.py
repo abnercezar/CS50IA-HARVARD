@@ -21,7 +21,7 @@ def initial_state():
 
 
 def player(board):
-    """
+    """e
     Returns player who has the next turn on a board.
     """
     # A função player deve receber uma entrada e
