@@ -142,13 +142,11 @@ def is_draw(board):
 
 
 def minimax(board):
-    """
-    Returns the optimal action for the current player on the board.
-    """
+    
     if terminal(board):
         return None
     best_score = float('-infinity')
-    best_move = None
+    best_moves = None
 
     for i in range(3):
         for j in range(3):
@@ -158,8 +156,10 @@ def minimax(board):
                 score = minimax_helper(board_copy, False)
                 if score > best_score:
                     best_score = score
-                    best_move = (i, j)
-    return best_move
+                    best_moves = [(i, j)]
+                elif score == best_score:
+                    best_moves.append((i, j))    
+    return random.choice(best_moves)
 
 possible_moves = None
 
