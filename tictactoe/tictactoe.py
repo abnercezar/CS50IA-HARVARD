@@ -163,7 +163,7 @@ def checkDiagonals(board, player):
     # Verifique a diagonal secundária
     if board[0][2] == player and board[1][1] == player and board[2][0] == player:
         return True
-    
+
 
 # Esta função verifica se um jogador ganhou preenchendo as colunas
 def checkColumns(board, player):
@@ -200,20 +200,24 @@ def is_board_full(board):
 def check_winner(board):
 # Verifique as linhas
     for row in board:
-        if row[0] == row[1] == row[2] != EMPTY:
-            return row[0]
+        if all(cell == 'X' for cell in row):
+            return 'X'
+        elif all(cell == 'O' for cell in row):
+            return 'O'
 
     #Verifique as colunas
     for col in range(3):
-        if board[0][col] == board[1][col] == board[2][col] != EMPTY:
-            return board[0][col]
+       if all(board[row][col] == 'X' for row in range(3)):
+           return 'X'
+       elif all(board[row][col] == 'O' for row in range(3)):
+           return 'O'
 
     # Check diagonals
-    if board[0][0] == board[1][1] == board[2][2] != EMPTY:
-        return board[0][0]
-    if board[0][2] == board[1][1] == board[2][0] != EMPTY:
-        return board[0][2]
-
+    if all(board[i][i] == 'X' for i in range(3)) or all(board[i][2 - i] == 'X' for i in range(3)):
+        return 'X'
+    elif all(board[i][i] == 'O' for i in range(3)) or all(board[i][2 - i] == 'O' for i in range(3)):
+        return 'O'
+    
     return None
 
 
