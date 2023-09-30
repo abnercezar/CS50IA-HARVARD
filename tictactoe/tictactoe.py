@@ -256,4 +256,4 @@ def check_win(board, player):
     if all(board[i][i] == player for i in range(3)) or all(board[i][2 - i] == player for i in range(3)):
         return True  # Vitória nas diagonais
 
-    return False    
+    return False
