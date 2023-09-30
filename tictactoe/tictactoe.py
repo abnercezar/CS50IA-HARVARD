@@ -8,46 +8,29 @@ import random
 
 X = "X"
 O = "O"
-EMPTY = ''
+EMPTY = " "
 
 
 def initial_state():
-    """
-    Returns starting state of the board.
-    """
     return [[EMPTY, EMPTY, EMPTY],
             [EMPTY, EMPTY, EMPTY],
             [EMPTY, EMPTY, EMPTY]]
 
 
+# A playerfunção deve receber um board estado como entrada e retornar qual é a vez do jogador (ou X ou O).
 def player(board):
-    """
-    Returns player who has the next turn on a board.
-    """
-    # A função player deve receber uma entrada e
-    # retorna de quem é a vez do jogador X ou O
+    countX = sum(row.count(X) for row in board)
+    countO = sum(row.count(O) for row in board)
 
-    countX = 0
-    countO = 0
-    for row in range(len(board)):
-        for col in range(len(board[row])):
-            if board[row][col] == X:
-                countX += 1
-            elif board[row][col] == O:
-                countO += 1
-
-    if countX > countO:
-        return O
-    else:
+    if countX == countO:
         return X
+    else:
+        return O
+    
 
+# A actionsfunção deve retornar uma lista setde todas as ações possíveis que podem ser executadas em um determinado quadro.
 
 def actions(board):
-    """
-    Returns set of all possible actions (i, j) available on the board.
-    """
-    # Este código gera um conjunto de movimentos possíveis
-    # verificando espaços vazios em cada linha do ‘tabuleiro’.
     possible_actions = set()
     for row in range(len(board)):
         for col in range(len(board[0])):
@@ -57,12 +40,8 @@ def actions(board):
     return possible_actions
 
 
+# A result função recebe a board e action como entrada e deve retornar um novo estado da placa, sem modificar a placa original.
 def result(board, action):
-    """
-    Returns the board that results from making move (i, j) on the board.
-    """
-    # Este código valida uma ação, então cria uma cópia do 'tabuleiro',
-    # aplica a 'ação' para o 'jogador' atual e retorna o tabuleiro atualizado.
     if action not in actions(board):
         raise Exception("Not valid action")
     new_board = [row[:] for row in board]
@@ -70,18 +49,95 @@ def result(board, action):
     new_board[row][col] = player(board)
     return new_board
 
+
+# A winner função deve aceitar a board como entrada e retornar o vencedor do tabuleiro, se houver.
 def winner(board):
-    """
-    Returns the winner of the game, if there is one.
-    """
-    # Este código verifica uma condição de vitória para 'X' ou 'O' nas linhas, colunas ou diagonais do
-    # 'tabuleiro', retornando o vencedor ou Nenhum se não houver vencedor.
     if checkRows(board, 'X') or checkColumns(board, 'X') or checkDiagonals(board, 'X'):
         return 'X'
     elif checkRows(board, 'O') or checkColumns(board, 'O') or checkDiagonals(board, 'O'):
         return 'O'
     else:
         return None
+
+
+# A terminalfunção deve aceitar a boardcomo entrada e retornar um valor booleano indicando se o jogo acabou. 
+def terminal(board):
+    if check_winner(board):
+        return True
+    if is_board_full(board):
+        return True
+    return False
+
+
+# A utilityfunção deve aceitar um terminal boardcomo entrada e saída da utilidade da placa.
+def utility(board):
+    if winner(board) == X:
+        return 1
+    elif winner(board) == O:
+        return -1
+    else:
+        return 0
+
+
+# A minimaxfunção deve receber a boardcomo entrada e retornar o movimento ideal para o jogador se mover naquele tabuleiro.
+def minimax(board):
+    if terminal(board):
+        return None
+    
+    alpha = float('-infinity')
+    beta = float('infinity')
+    best_score = float('-infinity')
+    best_moves = []
+
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == EMPTY:
+                board[i][j] = player(board)
+                if check_win(board, player(board)):
+                    return [(i, j)]
+                score = minimax_helper(board, False, alpha, beta)
+                board[i][j] = EMPTY
+                if score > best_score:
+                    best_score = score
+                    best_moves = [(i, j)]
+                elif score == best_score:
+                    best_moves.append((i, j))    
+    return random.choice(best_moves)
+
+possible_moves = None
+
+
+########################################################################
+def minimax_helper(board, is_maximizing, alpha, beta):
+    if terminal(board):
+        return utility(board)
+
+    if is_maximizing:
+        best_score = float('-infinity')
+        possible_moves = get_possible_moves(board)
+        for move in possible_moves:
+            make_move(board, move)
+            score = minimax_helper(board, False, alpha, beta)
+            undo_move(board, move)
+            best_score = max(score, best_score)
+            alpha = max(alpha, best_score)
+            if beta <= alpha:
+                break
+        return best_score
+    else:
+        best_score = float('infinity')
+        possible_moves = get_possible_moves(board)
+        for move in possible_moves:
+            make_move(board, move)
+            print
+            score = minimax_helper(board, True, alpha, beta)
+            undo_move(board, move)
+            best_score = min(score, best_score)
+            beta = min(beta, best_score)
+            if beta <= alpha:
+                break
+        return best_score
+
 
 # Esta função verifica se um jogador ganhou preenchendo uma linha inteira
 # no 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
@@ -94,6 +150,7 @@ def checkRows(board, player):
         if count == len(board[0]):
             return True
     return False
+
 
 # Esta função verifica se um jogador ganhou preenchendo a diagonal do canto superior
 # esquerdo ao canto inferior direito do 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
@@ -113,9 +170,8 @@ def checkDiagonals(board, player):
 
     if board[0][0] == player and board[1][2] == player and board[2][1] == player:
         return True
-
-    # Adicione mais verificações diagonais, se necessário
     return False
+
 
 # Esta função verifica se um jogador ganhou preenchendo as colunas
 def checkColumns(board, player):
@@ -128,6 +184,7 @@ def checkColumns(board, player):
             return True
     return False
 
+
 # Esta função verifica se todas as células do 'quadro' estão vazias.
 # Retorna True se todas as células estiverem vazias, caso contrário, False.
 def is_draw(board):
@@ -139,40 +196,6 @@ def is_draw(board):
     return countEmpty == 0
 
 
-
-
-def minimax(board):
-    
-    if terminal(board):
-        return None
-    best_score = float('-infinity')
-    best_moves = None
-
-    for i in range(3):
-        for j in range(3):
-            if board[i][j] == EMPTY:
-                board_copy = copy.deepcopy(board)
-                board_copy[i][j] = player(board)
-                score = minimax_helper(board_copy, False)
-                if score > best_score:
-                    best_score = score
-                    best_moves = [(i, j)]
-                elif score == best_score:
-                    best_moves.append((i, j))    
-    return random.choice(best_moves)
-
-possible_moves = None
-
-# A função terminal deve aceitar a board como entrada e retornar
-# um valor booleano indicando se o jogo acabou.
-def terminal(board):
-    # Verifique se o jogo acabou (vitória, empate ou em andamento)
-    if check_winner(board):
-        return True
-    if is_board_full(board):
-        return True
-    return False
-
 def is_board_full(board):
     # Verifique se o tabuleiro está cheio (condição de sorteio)
     for row in board:
@@ -181,8 +204,9 @@ def is_board_full(board):
                 return False
     return True
 
-# Verifique as linhas
+
 def check_winner(board):
+# Verifique as linhas
     for row in board:
         if row[0] == row[1] == row[2] != EMPTY:
             return row[0]
@@ -200,45 +224,9 @@ def check_winner(board):
 
     return None
 
-# A função utility deve aceitar um terminal placa
-# como entrada e saída da utilidade da placa.
-# Ela retorna 1 se o jogador X ganhou o jogo, -1 se o jogador
-# O ganhou o jogo ou 0 caso contrário.
-def utility(board):
-    """
-    Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
-    """
-    if winner(board) == X:
-        return 1
-    elif winner(board) == O:
-        return -1
-    else:
-        return 0
-
-
-def minimax_helper(board, is_maximizing):
-    if terminal(board):
-        return utility(board)
-
-    if is_maximizing:
-        best_score = float('-infinity')
-        possible_moves = get_possible_moves(board)
-        for move in possible_moves:
-            board_copy = make_move(board, move)
-            score = minimax_helper(board_copy, False)
-            best_score = max(score, best_score)
-        return best_score
-    else:
-        best_score = float('infinity')
-        possible_moves = get_possible_moves(board)
-        for move in possible_moves:
-            board_copy = make_move(board, move)
-            score = minimax_helper(board_copy, not is_maximizing)
-            best_score = min(score, best_score)
-        return best_score
     
+# Código para calcular os movimentos possíveis
 def get_possible_moves(board):
-    # Código para calcular os movimentos possíveis
     possible_moves = []
     for row in range(len(board)):
         for col in range(len(board[row])):
@@ -246,8 +234,26 @@ def get_possible_moves(board):
                 possible_moves.append((row, col))
     return possible_moves
 
+
 def make_move(board, move):
     current_player = player(board)
     new_board = board.copy()
     new_board[move[0]][move[1]] = current_player
     return new_board
+
+
+def undo_move(board, move):
+    board[move[0]][move[1]] = EMPTY
+
+
+def check_win(board, player):
+    # Verificar linhas, colunas e diagonais para vitória
+    for i in range(3):
+        if all(board[i][j] == player for j in range(3)):
+            return True  # Vitória na linha i
+        if all(board[j][i] == player for j in range(3)):
+            return True  # Vitória na coluna i
+    if all(board[i][i] == player for i in range(3)) or all(board[i][2 - i] == player for i in range(3)):
+        return True  # Vitória nas diagonais
+
+    return False    
