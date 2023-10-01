@@ -233,7 +233,7 @@ def get_possible_moves(board):
                 possible_moves.append((row, col))
     return possible_moves
 
-
+# Função para realizar uma jogada em um tabuleiro de jogo, receber o estado atual e retornar um novo tabuleiro.
 def make_move(board, move):
     current_player = player(board)
     new_board = board.copy()
@@ -245,8 +245,8 @@ def undo_move(board, move):
     board[move[0]][move[1]] = EMPTY
 
 
+# Verificar linhas, colunas e diagonais para ver quem venceu
 def check_win(board, player):
-    # Verificar linhas, colunas e diagonais para vitória
     for i in range(3):
         if all(board[i][j] == player for j in range(3)):
             return True  # Vitória na linha i
