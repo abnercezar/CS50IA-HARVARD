@@ -107,7 +107,9 @@ def minimax(board):
 possible_moves = None
 
 
-########################################################################
+# Função para implementar o algoritmo Minimax com poda alfa-beta.
+# A função recebe o estado atual do tabuleiro, um booleano indicando se o jogador atual está maximizando ou minimizando,
+# e os valores alfa e beta, que são usados para a poda alfa-beta.
 def minimax_helper(board, is_maximizing, alpha, beta):
     if terminal(board):
         return utility(board)
@@ -188,15 +190,15 @@ def is_draw(board):
     return countEmpty == 0
 
 
+# Verifique se o tabuleiro está cheio (condição de sorteio)
 def is_board_full(board):
-    # Verifique se o tabuleiro está cheio (condição de sorteio)
     for row in board:
         for cell in row:
             if cell == EMPTY:
                 return False
     return True
 
-
+# Função verifique 
 def check_winner(board):
 # Verifique as linhas
     for row in board:
