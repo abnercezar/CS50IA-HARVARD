@@ -259,3 +259,14 @@ def check_win(board, player):
         return True
 
     return False
+
+# Esta função controla o fluxo do jogo e alterna entre os jogadores
+def play_game():
+    while not game_over:
+        if current_player == human:
+            get_human_move()
+        else:
+            move = minimax(board)
+            make_move(board, move)
+        switch_player()
+        game_over = check_win(board)
