@@ -12,23 +12,22 @@ EMPTY = " "
 
 
 def initial_state():
-    return [[EMPTY, EMPTY, EMPTY],
-            [EMPTY, EMPTY, EMPTY],
-            [EMPTY, EMPTY, EMPTY]]
+    return [[EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY]]
 
 
 # A playerfunção deve receber um board estado como entrada e retornar qual é a vez do jogador (ou X ou O).
 def player(board):
-    countX = sum(row.count('X') for row in board)
-    countO = sum(row.count('O') for row in board)
+    countX = sum(row.count("X") for row in board)
+    countO = sum(row.count("O") for row in board)
 
     if countX <= countO:
-        return 'X'
+        return "X"
     else:
-        return 'O'
+        return "O"
 
 
 # A actionsfunção deve retornar uma lista setde todas as ações possíveis que podem ser executadas em um determinado quadro.
+
 
 def actions(board):
     possible_actions = set()
@@ -52,10 +51,12 @@ def result(board, action):
 
 # A winner função deve aceitar a board como entrada e retornar o vencedor do tabuleiro, se houver.
 def winner(board):
-    if checkRows(board, 'X') or checkColumns(board, 'X') or checkDiagonals(board, 'X'):
-        return 'X'
-    elif checkRows(board, 'O') or checkColumns(board, 'O') or checkDiagonals(board, 'O'):
-        return 'O'
+    if checkRows(board, "X") or checkColumns(board, "X") or checkDiagonals(board, "X"):
+        return "X"
+    elif (
+        checkRows(board, "O") or checkColumns(board, "O") or checkDiagonals(board, "O")
+    ):
+        return "O"
     else:
         return None
 
@@ -84,9 +85,9 @@ def minimax(board):
     if terminal(board):
         return None
 
-    alpha = float('-infinity')
-    beta = float('infinity')
-    best_score = float('-infinity')
+    alpha = float("-infinity")
+    beta = float("infinity")
+    best_score = float("-infinity")
     best_moves = []
 
     for i in range(3):
@@ -104,6 +105,7 @@ def minimax(board):
                     best_moves.append((i, j))
     return random.choice(best_moves)
 
+
 possible_moves = None
 
 
@@ -115,7 +117,7 @@ def minimax_helper(board, is_maximizing, alpha, beta):
         return utility(board)
 
     if is_maximizing:
-        best_score = float('-infinity')
+        best_score = float("-infinity")
         possible_moves = get_possible_moves(board)
         for move in possible_moves:
             make_move(board, move)
@@ -127,7 +129,7 @@ def minimax_helper(board, is_maximizing, alpha, beta):
                 break
         return best_score
     else:
-        best_score = float('infinity')
+        best_score = float("infinity")
         possible_moves = get_possible_moves(board)
         for move in possible_moves:
             make_move(board, move)
@@ -155,7 +157,6 @@ def checkRows(board, player):
 
 # Esta função verifica se um jogador ganhou preenchendo as diagonais do 'tabuleiro'.
 def checkDiagonals(board, player):
-
     # Verifique a diagonal principal
     if board[0][0] == player and board[1][1] == player and board[2][2] == player:
         return True
@@ -195,28 +196,32 @@ def is_board_full(board):
                 return False
     return True
 
+
 # Função verifique o vencedor
 def check_winner(board):
-
-# Verifique as linhas
+    # Verifique as linhas
     for row in board:
-        if all(cell == 'X' for cell in row):
-            return 'X'
-        elif all(cell == 'O' for cell in row):
-            return 'O'
+        if all(cell == "X" for cell in row):
+            return "X"
+        elif all(cell == "O" for cell in row):
+            return "O"
 
-    #Verifique as colunas
+    # Verifique as colunas
     for col in range(3):
-       if all(board[row][col] == 'X' for row in range(3)):
-           return 'X'
-       elif all(board[row][col] == 'O' for row in range(3)):
-           return 'O'
+        if all(board[row][col] == "X" for row in range(3)):
+            return "X"
+        elif all(board[row][col] == "O" for row in range(3)):
+            return "O"
 
     # Check diagonals
-    if all(board[i][i] == 'X' for i in range(3)) or all(board[i][2 - i] == 'X' for i in range(3)):
-        return 'X'
-    elif all(board[i][i] == 'O' for i in range(3)) or all(board[i][2 - i] == 'O' for i in range(3)):
-        return 'O'
+    if all(board[i][i] == "X" for i in range(3)) or all(
+        board[i][2 - i] == "X" for i in range(3)
+    ):
+        return "X"
+    elif all(board[i][i] == "O" for i in range(3)) or all(
+        board[i][2 - i] == "O" for i in range(3)
+    ):
+        return "O"
 
     return None
 
@@ -230,12 +235,14 @@ def get_possible_moves(board):
                 possible_moves.append((row, col))
     return possible_moves
 
+
 # Função para realizar uma jogada em um tabuleiro de jogo, receber o estado atual e retornar um novo tabuleiro.
 def make_move(board, move):
     current_player = player(board)
     new_board = board.copy()
     new_board[move[0]][move[1]] = current_player
     return new_board
+
 
 # Função para desfazer uma jogada em um tabuleiro de jogo.
 def undo_move(board, move):
@@ -245,7 +252,6 @@ def undo_move(board, move):
 # Verificar linhas, colunas e diagonais para ver quem venceu
 def check_win(board, player):
     for i in range(3):
-
         # Vitória na linha
         if all(board[i][j] == player for j in range(3)):
             return True
@@ -255,13 +261,18 @@ def check_win(board, player):
             return True
 
     # Vitória nas diagonais
-    if all(board[i][i] == player for i in range(3)) or all(board[i][2 - i] == player for i in range(3)):
+    if all(board[i][i] == player for i in range(3)) or all(
+        board[i][2 - i] == player for i in range(3)
+    ):
         return True
 
     return False
 
+
 # Esta função controla o fluxo do jogo e alterna entre os jogadores
-human = 'X'
+human = "X"
+
+
 def play_game():
     current_player = X  # Começar com o jogador X
     board = initial_state()
@@ -280,7 +291,6 @@ def play_game():
         current_player = O if current_player == X else X
 
 
-
 def get_human_move():
     while True:
         try:
@@ -294,4 +304,3 @@ def get_human_move():
                 print("Coordenadas inválidas. Digite novamente.")
         except ValueError:
             print("Entrada inválida. Digite números inteiros para a linha e a coluna.")
-
