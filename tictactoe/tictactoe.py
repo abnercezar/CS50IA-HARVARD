@@ -43,7 +43,7 @@ def actions(board):
 # A result função recebe a board e action como entrada e deve retornar um novo estado da placa, sem modificar a placa original.
 def result(board, action):
     if action not in actions(board):
-        raise Exception("Not valid action")
+        raise Exception("Ação inválida")
     new_board = [row[:] for row in board]
     row, col = action
     new_board[row][col] = player(board)
