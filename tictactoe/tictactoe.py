@@ -28,21 +28,21 @@ def player(board):
         return 'O'
 
 
-# A actionfunção deve retornar uma lista setde todas as ações possíveis que podem ser executadas em um determinado quadro.
+# A actionsfunção deve retornar uma lista setde todas as ações possíveis que podem ser executadas em um determinado quadro.
 
-def action(board):
-    possible_action = set()
+def actions(board):
+    possible_actions = set()
     for row in range(len(board)):
         for col in range(len(board[0])):
             if board[row][col] == EMPTY:
-                possible_action.add((row, col))
+                possible_actions.add((row, col))
 
-    return possible_action
+    return possible_actions
 
 
 # A result função recebe a board e action como entrada e deve retornar um novo estado da placa, sem modificar a placa original.
 def result(board, action):
-    if action not in action(board):
+    if action not in actions(board):
         raise Exception("Not valid action")
     new_board = [row[:] for row in board]
     row, col = action
