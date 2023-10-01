@@ -240,7 +240,7 @@ def make_move(board, move):
     new_board[move[0]][move[1]] = current_player
     return new_board
 
-
+# Função para desfazer uma jogada em um tabuleiro de jogo.
 def undo_move(board, move):
     board[move[0]][move[1]] = EMPTY
 
@@ -248,11 +248,17 @@ def undo_move(board, move):
 # Verificar linhas, colunas e diagonais para ver quem venceu
 def check_win(board, player):
     for i in range(3):
+
+        # Vitória na linha
         if all(board[i][j] == player for j in range(3)):
-            return True  # Vitória na linha i
+            return True
+
+        # Vitória na coluna
         if all(board[j][i] == player for j in range(3)):
-            return True  # Vitória na coluna i
+            return True
+
+    # Vitória nas diagonais
     if all(board[i][i] == player for i in range(3)) or all(board[i][2 - i] == player for i in range(3)):
-        return True  # Vitória nas diagonais
+        return True
 
     return False
