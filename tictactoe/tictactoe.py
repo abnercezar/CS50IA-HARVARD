@@ -261,6 +261,7 @@ def check_win(board, player):
     return False
 
 # Esta função controla o fluxo do jogo e alterna entre os jogadores
+human = 'X'
 def play_game():
     current_player = X  # Começar com o jogador X
     board = initial_state()
