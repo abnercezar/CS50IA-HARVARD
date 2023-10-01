@@ -141,8 +141,7 @@ def minimax_helper(board, is_maximizing, alpha, beta):
         return best_score
 
 
-# Esta função verifica se um jogador ganhou preenchendo uma linha inteira
-# no 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
+# Esta função verifica se um jogador ganhou preenchendo uma linha inteira no 'tabuleiro'.
 def checkRows(board, player):
     for row in range(len(board[0])):
         count = 0
@@ -154,8 +153,7 @@ def checkRows(board, player):
     return False
 
 
-# Esta função verifica se um jogador ganhou preenchendo a diagonal do canto superior
-# esquerdo ao canto inferior direito do 'tabuleiro'. Ele retorna True se for o caso, caso contrário, False.
+# Esta função verifica se um jogador ganhou preenchendo a diagonal do canto superior esquerdo ao canto inferior direito do 'tabuleiro'.
 def checkDiagonals(board, player):
 
     # Verifique a diagonal principal
