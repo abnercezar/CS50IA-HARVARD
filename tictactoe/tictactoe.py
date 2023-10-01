@@ -19,13 +19,13 @@ def initial_state():
 
 # A playerfunção deve receber um board estado como entrada e retornar qual é a vez do jogador (ou X ou O).
 def player(board):
-    countX = sum(row.count(X) for row in board)
-    countO = sum(row.count(O) for row in board)
+    countX = sum(row.count('X') for row in board)
+    countO = sum(row.count('O') for row in board)
 
-    if countX == countO:
-        return X
+    if countX <= countO:
+        return 'X'
     else:
-        return O
+        return 'O'
 
 
 # A actionsfunção deve retornar uma lista setde todas as ações possíveis que podem ser executadas em um determinado quadro.
@@ -217,7 +217,7 @@ def check_winner(board):
         return 'X'
     elif all(board[i][i] == 'O' for i in range(3)) or all(board[i][2 - i] == 'O' for i in range(3)):
         return 'O'
-    
+
     return None
 
 
