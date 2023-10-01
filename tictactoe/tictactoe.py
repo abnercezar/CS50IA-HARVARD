@@ -31,7 +31,7 @@ def player(board):
 # A actionfunção deve retornar uma lista setde todas as ações possíveis que podem ser executadas em um determinado quadro.
 
 def action(board):
-    possible_action = []
+    possible_action = set()
     for row in range(len(board)):
         for col in range(len(board[0])):
             if board[row][col] == EMPTY:
