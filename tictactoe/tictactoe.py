@@ -198,8 +198,9 @@ def is_board_full(board):
                 return False
     return True
 
-# Função verifique 
+# Função verifique o vencedor
 def check_winner(board):
+
 # Verifique as linhas
     for row in board:
         if all(cell == 'X' for cell in row):
@@ -223,7 +224,7 @@ def check_winner(board):
     return None
 
 
-# Código para calcular os movimentos possíveis
+# Função para calcular os movimentos possíveis
 def get_possible_moves(board):
     possible_moves = []
     for row in range(len(board)):
