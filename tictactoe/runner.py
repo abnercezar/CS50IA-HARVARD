@@ -95,6 +95,7 @@ while True:
 
         # Show title
         if game_over:
+            print
             winner = ttt.winner(board)
             if winner is None:
                 title = f"Game Over: Tie."
