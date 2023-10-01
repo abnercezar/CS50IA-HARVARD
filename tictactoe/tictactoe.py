@@ -60,7 +60,7 @@ def winner(board):
         return None
 
 
-# A terminalfunção deve aceitar a boardcomo entrada e retornar um valor booleano indicando se o jogo acabou.
+# A terminal função deve aceitar a "board" como entrada e retornar um valor booleano indicando se o jogo acabou.
 def terminal(board):
     if check_winner(board):
         return True
