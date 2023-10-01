@@ -270,3 +270,19 @@ def play_game():
             make_move(board, move)
         switch_player()
         game_over = check_win(board)
+        
+
+def get_human_move():
+    while True:
+        try:
+            row = int(input("Digite o número da linha (0, 1 ou 2): "))
+            col = int(input("Digite o número da coluna (0, 1 ou 2): "))
+
+            # Verifique se as coordenadas são válidas
+            if row in [0, 1, 2] and col in [0, 1, 2]:
+                return (row, col)
+            else:
+                print("Coordenadas inválidas. Digite novamente.")
+        except ValueError:
+            print("Entrada inválida. Digite números inteiros para a linha e a coluna.")
+
