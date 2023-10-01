@@ -153,7 +153,7 @@ def checkRows(board, player):
     return False
 
 
-# Esta função verifica se um jogador ganhou preenchendo a diagonal do canto superior esquerdo ao canto inferior direito do 'tabuleiro'.
+# Esta função verifica se um jogador ganhou preenchendo as diagonais do 'tabuleiro'.
 def checkDiagonals(board, player):
 
     # Verifique a diagonal principal
@@ -178,7 +178,6 @@ def checkColumns(board, player):
 
 
 # Esta função verifica se todas as células do 'quadro' estão vazias.
-# Retorna True se todas as células estiverem vazias, caso contrário, False.
 def is_draw(board):
     countEmpty = len(board) * len(board[0])
     for row in range(len(board)):
