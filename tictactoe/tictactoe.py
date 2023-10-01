@@ -79,7 +79,7 @@ def utility(board):
         return 0
 
 
-# A minimax função deve receber a boardcomo entrada e retornar o movimento ideal para o jogador se mover naquele tabuleiro.
+# A minimaxfunção deve receber a boardcomo entrada e retornar o movimento ideal para o jogador se mover naquele tabuleiro.
 def minimax(board):
     if terminal(board):
         return None
