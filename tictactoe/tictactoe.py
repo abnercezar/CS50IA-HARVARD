@@ -78,7 +78,25 @@ def utility(board):
         return -1
     else:
         return 0
-    
+
+def best_move(board):
+    if terminal(board):
+        return None
+
+    best_score = -float("inf")
+    best_action = None
+
+    for action in valid_actions(board):
+        new_board = result(board, action)
+        score = minimax_helper(new_board, False)
+
+        if score > best_score:
+            best_score = score
+            best_action = action
+
+    return best_action
+
+
 
 
 # A minimaxfunção deve receber a boardcomo entrada e retornar o movimento ideal para o jogador se mover naquele tabuleiro.
