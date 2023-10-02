@@ -19,13 +19,9 @@ def initial_state():
 def player(board):
     countX = sum(row.count("X") for row in board)
     countO = sum(row.count("O") for row in board)
+    return X if countX <= countO else O
 
-    if countX <= countO:
-        return "X"
-    else:
-        return "O"
-
-
+   
 # A actionsfunção deve retornar uma lista setde todas as ações possíveis que podem ser executadas em um determinado quadro.
 
 
