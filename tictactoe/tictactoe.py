@@ -29,7 +29,7 @@ def player(board):
 # A actionsfunção deve retornar uma lista setde todas as ações possíveis que podem ser executadas em um determinado quadro.
 
 
-def actions(board):
+def valid_actions(board):
     possible_actions = set()
     for row in range(len(board)):
         for col in range(len(board[0])):
@@ -38,12 +38,10 @@ def actions(board):
 
     return possible_actions
 
-def valid_actions(board):
-
 
 # A result função recebe a board e action como entrada e deve retornar um novo estado da placa, sem modificar a placa original.
 def result(board, action):
-    if action not in actions(board):
+    if action not in valid_actions(board):
         raise Exception("Ação inválida")
     new_board = [row[:] for row in board]
     row, col = action
