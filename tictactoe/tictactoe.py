@@ -113,8 +113,6 @@ def minimax(board):
         for j in range(3):
             if board[i][j] == EMPTY:
                 board[i][j] = player(board)
-                if check_win(board, player(board)):
-                    return [(i, j)]
                 score = minimax_helper(board, False, alpha, beta)
                 board[i][j] = EMPTY
                 if score > best_score:
@@ -152,7 +150,8 @@ def minimax_helper(board, is_maximizing, alpha, beta):
         possible_moves = get_possible_moves(board)
         for move in possible_moves:
             make_move(board, move)
-            print
+            if check_win(board, player(board)):
+                return [(i, j)]
             score = minimax_helper(board, True, alpha, beta)
             undo_move(board, move)
             best_score = min(score, best_score)
