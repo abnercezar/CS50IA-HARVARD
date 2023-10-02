@@ -38,6 +38,8 @@ def actions(board):
 
     return possible_actions
 
+def valid_actions(board):
+
 
 # A result função recebe a board e action como entrada e deve retornar um novo estado da placa, sem modificar a placa original.
 def result(board, action):
