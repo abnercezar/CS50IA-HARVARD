@@ -135,6 +135,7 @@ def minimax_helper(board, is_maximizing, alpha, beta):
 
     if is_maximizing:
         best_score = float("-infinity")
+        best_move = None
         possible_moves = get_possible_moves(board)
         for move in possible_moves:
             make_move(board, move)
