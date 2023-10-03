@@ -29,7 +29,7 @@ def player(board):
 # A actionsfunção deve retornar uma lista setde todas as ações possíveis que podem ser executadas em um determinado quadro.
 
 
-def valid_actions(board):
+def actions(board):
     possible_actions = set()
     for row in range(len(board)):
         for col in range(len(board[0])):
@@ -41,7 +41,7 @@ def valid_actions(board):
 
 # A result função recebe a board e action como entrada e deve retornar um novo estado da placa, sem modificar a placa original.
 def result(board, action):
-    if action not in valid_actions(board):
+    if action not in actions(board):
         raise Exception("Ação inválida")
     new_board = [row[:] for row in board]
     row, col = action
@@ -79,25 +79,6 @@ def utility(board):
     else:
         return 0
 
-def best_move(board):
-    if terminal(board):
-        return None
-
-    best_score = -float("inf")
-    best_action = None
-
-    for action in valid_actions(board):
-        new_board = result(board, action)
-        score = minimax_helper(new_board, False)
-
-        if score > best_score:
-            best_score = score
-            best_action = action
-
-    return best_action
-
-
-
 
 # A minimaxfunção deve receber a boardcomo entrada e retornar o movimento ideal para o jogador se mover naquele tabuleiro.
 def minimax(board):
@@ -113,6 +94,8 @@ def minimax(board):
         for j in range(3):
             if board[i][j] == EMPTY:
                 board[i][j] = player(board)
+                if check_win(board, player(board)):
+                    return [(i, j)]
                 score = minimax_helper(board, False, alpha, beta)
                 board[i][j] = EMPTY
                 if score > best_score:
@@ -135,27 +118,22 @@ def minimax_helper(board, is_maximizing, alpha, beta):
 
     if is_maximizing:
         best_score = float("-infinity")
-        best_move = None  # Adicione esta linha para rastrear a melhor jogada
         possible_moves = get_possible_moves(board)
         for move in possible_moves:
             make_move(board, move)
             score = minimax_helper(board, False, alpha, beta)
             undo_move(board, move)
-            if score > best_score:
-                best_score = score
-                best_move = move  # Atualize a melhor jogada
+            best_score = max(score, best_score)
             alpha = max(alpha, best_score)
             if beta <= alpha:
                 break
-        if best_move is not None:  # Verifique se existe uma melhor jogada
-            return best_move
-        return best_score  # Se não houver melhor jogada, retorne a melhor pontuação
+        return best_score
     else:
         best_score = float("infinity")
         possible_moves = get_possible_moves(board)
         for move in possible_moves:
             make_move(board, move)
-            
+            print
             score = minimax_helper(board, True, alpha, beta)
             undo_move(board, move)
             best_score = min(score, best_score)
@@ -163,7 +141,6 @@ def minimax_helper(board, is_maximizing, alpha, beta):
             if beta <= alpha:
                 break
         return best_score
-
 
 
 # Esta função verifica se um jogador ganhou preenchendo uma linha inteira no 'tabuleiro'.
