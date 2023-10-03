@@ -119,7 +119,7 @@ def best_move(board):
                 board[i][j] = '_'
                 if(move_val > best_val):
                     best_val = move_val
-                    move_value = i * 3 + j
+                    move_value = (i, j)
 
     return move_value
 
