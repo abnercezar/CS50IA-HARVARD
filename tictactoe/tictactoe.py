@@ -26,7 +26,7 @@ def player(board):
         return "O"
 
 
-# A actionsfunção deve retornar uma lista setde todas as ações possíveis que podem ser executadas em um determinado quadro.
+# A actionsfunção deve retornar uma lista set de todas as ações possíveis que podem ser executadas em um determinado quadro.
 
 
 def actions(board):
