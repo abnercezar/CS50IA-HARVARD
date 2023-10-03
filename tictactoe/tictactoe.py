@@ -108,6 +108,21 @@ def minimax(board):
 
 possible_moves = None
 
+def best_move(board):
+    best_val = -1000
+    move_value = -1
+    for i in range(3):
+        for j in range(3):
+            if(board[i][j] == '_'):
+                board[i][j] = 'X'
+                move_val = minimax(board, 0, False)
+                board[i][j] = '_'
+                if(move_val > best_val):
+                    best_val = move_val
+                    move_value = i * 3 + j
+
+    return move_value
+
 
 # Função para implementar o algoritmo Minimax com poda alfa-beta.
 # A função recebe o estado atual do tabuleiro, um booleano indicando se o jogador atual está maximizando ou minimizando,
