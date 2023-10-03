@@ -104,17 +104,23 @@ def minimax(board):
     if terminal(board):
         return None
 
-    best_move = None
-    best_score = float("-infinity") if is_maximizing else float("infinity")
-    possible_moves = get_possible_moves(board)
-    for move in possible_moves:
-        make_move(board, move)
-        _, score = minimax(board, not is_maximizing)
-        undo_move(board, move)
-        if (is_maximizing and score > best_score) or (not is_maximizing and score < best_score):
-            best_move = move
-            best_score = score
-    return best_move, best_score
+    alpha = float("-infinity")
+    beta = float("infinity")
+    best_score = float("-infinity")
+    best_moves = []
+
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == EMPTY:
+                board[i][j] = player(board)
+                score = minimax_helper(board, False, alpha, beta)
+                board[i][j] = EMPTY
+                if score > best_score:
+                    best_score = score
+                    best_moves = [(i, j)]
+                elif score == best_score:
+                    best_moves.append((i, j))
+    return random.choice(best_moves)
 
 
 possible_moves = None
@@ -129,24 +135,30 @@ def minimax_helper(board, is_maximizing, alpha, beta):
 
     if is_maximizing:
         best_score = float("-infinity")
+        best_move = None  # Adicione esta linha para rastrear a melhor jogada
         possible_moves = get_possible_moves(board)
         for move in possible_moves:
             make_move(board, move)
             score = minimax_helper(board, False, alpha, beta)
             undo_move(board, move)
-            best_score = max(best_score, score)
+            if score > best_score:
+                best_score = score
+                best_move = move  # Atualize a melhor jogada
             alpha = max(alpha, best_score)
             if beta <= alpha:
                 break
-        return best_score
-     else:
+        if best_move is not None:  # Verifique se existe uma melhor jogada
+            return best_move
+        return best_score  # Se não houver melhor jogada, retorne a melhor pontuação
+    else:
         best_score = float("infinity")
         possible_moves = get_possible_moves(board)
         for move in possible_moves:
             make_move(board, move)
+            
             score = minimax_helper(board, True, alpha, beta)
             undo_move(board, move)
-            best_score = min(best_score, score)
+            best_score = min(score, best_score)
             beta = min(beta, best_score)
             if beta <= alpha:
                 break
