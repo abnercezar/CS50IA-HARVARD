@@ -88,7 +88,7 @@ def minimax(board):
     alpha = float("-infinity")
     beta = float("infinity")
     best_score = float("-infinity")
-    best_moves = []
+    best_move = []
 
     for i in range(3):
         for j in range(3):
@@ -100,10 +100,10 @@ def minimax(board):
                 board[i][j] = EMPTY
                 if score > best_score:
                     best_score = score
-                    best_moves = [(i, j)]
+                    best_move = [(i, j)]
                 elif score == best_score:
-                    best_moves.append((i, j))
-    return random.choice(best_moves)
+                    best_move.append((i, j))
+    return random.choice(best_move)
 
 
 possible_moves = None
@@ -137,7 +137,7 @@ def minimax_helper(board, is_maximizing, alpha, beta):
     if is_maximizing:
         best_score = float("-infinity")
         possible_moves = get_possible_moves(board)
-        
+
         for move in possible_moves:
             make_move(board, move)
             score = minimax_helper(board, False, alpha, beta)
