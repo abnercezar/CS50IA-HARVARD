@@ -81,35 +81,47 @@ def utility(board):
 
 
 # A minimaxfunção deve receber a boardcomo entrada e retornar o movimento ideal para o jogador se mover naquele tabuleiro.
-def minimax(board, depth=0, maximizing_player=True):
+def minimax(board):
     if terminal(board):
-        return utility(board)
+        return None
 
-    if maximizing_player:
-        value = -float('inf')
-        for move in actions(board):
-            new_board = result(board, move)
-            value = max(value, minimax(new_board, depth + 1, False))
-        return value
-    else:
-        value = float('inf')
-        for move in actions(board):
-            new_board = result(board, move)
-            value = min(value, minimax(new_board, depth + 1, True))
-        return value
+    alpha = float("-infinity")
+    beta = float("infinity")
+    best_score = float("-infinity")
+    best_move = []
+
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == EMPTY:
+                board[i][j] = player(board)
+                if check_win(board, player(board)):
+                    return [(i, j)]
+                score = minimax_helper(board, False, alpha, beta)
+                board[i][j] = EMPTY
+                if score > best_score:
+                    best_score = score
+                    best_move = [(i, j)]
+                elif score == best_score:
+                    best_move.append((i, j))
+    return random.choice(best_move)
+
+
+possible_moves = None
 
 def best_move(board):
     best_val = -1000
-    best_move = None
+    move_value = -1
+    for i in range(3):
+        for j in range(3):
+            if(board[i][j] == '_'):
+                board[i][j] = 'X'
+                move_val = minimax(board, 0, False)
+                board[i][j] = '_'
+                if(move_val > best_val):
+                    best_val = move_val
+                    move_value = (i, j)
 
-    for move in actions(board):
-        new_board = result(board, move)
-        move_val = minimax(new_board)
-        if move_val > best_val:
-            best_val = move_val
-            best_move = move
-
-    return best_move
+    return move_value
 
 
 # Função para implementar o algoritmo Minimax com poda alfa-beta.
