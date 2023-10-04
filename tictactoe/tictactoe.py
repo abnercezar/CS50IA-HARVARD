@@ -131,9 +131,13 @@ def minimax_helper(board, is_maximizing, alpha, beta):
     if terminal(board):
         return utility(board)
 
+    # Obtém todos os movimentos possíveis usando a função 'actions'
+    possible_moves = actions(board)
+
     if is_maximizing:
         best_score = float("-infinity")
         possible_moves = get_possible_moves(board)
+        
         for move in possible_moves:
             make_move(board, move)
             score = minimax_helper(board, False, alpha, beta)
