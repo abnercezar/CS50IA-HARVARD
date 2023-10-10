@@ -68,8 +68,7 @@ def terminal(board):
     if is_board_full(board):
         return True
     return False
-if check_win(board, player(board)):
-    return [((i, j), float("infinity"))]  # winning move gets maximum score
+    
 
 
 # A utilityfunção deve aceitar um terminal boardcomo entrada e saída da utilidade da placa.
