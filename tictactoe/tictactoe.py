@@ -62,12 +62,8 @@ def winner(board):
 
 
 # A terminal função deve aceitar a "board" como entrada e retornar um valor booleano indicando se o jogo acabou.
-def terminal(board):
-    if check_winner(board):
-        return True
-    if is_board_full(board):
-        return True
-    return False
+if check_win(board, player(board)):
+    return [((i, j), float("infinity"))]  # winning move gets maximum score
 
 
 # A utilityfunção deve aceitar um terminal boardcomo entrada e saída da utilidade da placa.
