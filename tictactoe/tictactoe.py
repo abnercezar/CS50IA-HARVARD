@@ -80,7 +80,7 @@ def utility(board):
         return 0
 
 
-# A minimaxfunção deve receber a boardcomo entrada e retornar o movimento ideal para o jogador se mover naquele tabuleiro.
+# A minimaxfunção deve receber a board como entrada e retornar o movimento ideal para o jogador se mover naquele tabuleiro.
 def minimax(board):
     if terminal(board):
         return None
@@ -286,6 +286,7 @@ def check_win(board, player):
         return True
 
     return False
+
 
 # Esta função controla o fluxo do jogo e alterna entre os jogadores
 human = "X"
