@@ -105,29 +105,28 @@ def minimax(board):
                     best_move.append((i, j))
     return random.choice(best_move)
 
-function minimax(board, depth, isMaximizingPlayer):
-    if game is over or depth is 0:
-        return static evaluation of board
-
-    if isMaximizingPlayer:
-        bestScore = -infinity
-        for each move:
-            make move
-            score = minimax(board, depth - 1, false)
-            undo move
-            bestScore = max(score, bestScore)
-        return bestScore
-    else:
-        bestScore = +infinity
-        for each move:
-            make move
-            score = minimax(board, depth - 1, true)
-            undo move
-            bestScore = min(score, bestScore)
-        return bestScore
-
-
 possible_moves = None
+
+    function minimax(board, depth, isMaximizingPlayer):
+        if game is over or depth is 0:
+            return static evaluation of board
+
+        if isMaximizingPlayer:
+            bestScore = -infinity
+            for each move:
+                make move
+                score = minimax(board, depth - 1, false)
+                undo move
+                bestScore = max(score, bestScore)
+            return bestScore
+        else:
+            bestScore = +infinity
+            for each move:
+                make move
+                score = minimax(board, depth - 1, true)
+                undo move
+                bestScore = min(score, bestScore)
+            return bestScore
 
 def best_move(board):
     best_val = -1000
