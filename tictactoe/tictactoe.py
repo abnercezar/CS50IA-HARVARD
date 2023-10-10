@@ -102,7 +102,7 @@ def minimax(board):
                     best_score = score
                     best_move = [(i, j), score]
                 elif score == best_score:
-                    best_move.append((i, j), score)
+                     best_move.append(((i, j), score))
 
     best_move = max(best_move, key=lambda x: x[1])[0]
     return best_move
