@@ -100,9 +100,10 @@ def minimax(board):
                 board[i][j] = EMPTY
                 if score > best_score:
                     best_score = score
-                    best_move = [(i, j)]
+                    best_move = [(i, j), score]
                 elif score == best_score:
-                    best_move.append((i, j))
+                    best_move.append((i, j), score)
+                    best_move = max(best_move, key=lambda x: x[1])[0]
     return random.choice(best_move)
 
 possible_moves = None
