@@ -231,7 +231,7 @@ def check_winner(board):
         elif all(board[row][col] == "O" for row in range(3)):
             return "O"
 
-    # Check diagonals
+    # Verifique as diagonais
     if all(board[i][i] == "X" for i in range(3)) or all(
         board[i][2 - i] == "X" for i in range(3)
     ):
