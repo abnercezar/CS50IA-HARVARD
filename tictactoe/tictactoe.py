@@ -68,7 +68,6 @@ def terminal(board):
     if is_board_full(board):
         return True
     return False
-    
 
 
 # A utilityfunção deve aceitar um terminal boardcomo entrada e saída da utilidade da placa.
@@ -81,7 +80,7 @@ def utility(board):
         return 0
 
 
-# A minimaxfunção deve receber a board como entrada e retornar o movimento ideal para o jogador se mover naquele tabuleiro.
+# A minimaxfunção deve receber a boardcomo entrada e retornar o movimento ideal para o jogador se mover naquele tabuleiro.
 def minimax(board):
     if terminal(board):
         return None
@@ -101,14 +100,13 @@ def minimax(board):
                 board[i][j] = EMPTY
                 if score > best_score:
                     best_score = score
-                    best_move = [(i, j), score]
+                    best_move = [(i, j)]
                 elif score == best_score:
-                     best_move.append(((i, j), score))
-
-    best_move = max(best_move, key=lambda x: x[1])[0]
-    return best_move
+                    best_move.append((i, j))
+    return random.choice(best_move)
 
 
+possible_moves = None
 
 def best_move(board):
     best_val = -1000
@@ -288,39 +286,3 @@ def check_win(board, player):
 
     return False
 
-
-# Esta função controla o fluxo do jogo e alterna entre os jogadores
-human = "X"
-
-
-def play_game():
-    current_player = X  # Começar com o jogador X
-    board = initial_state()
-    game_over = False
-
-    while not game_over:
-        if current_player == human:
-            move = get_human_move()
-        else:
-            move = minimax(board)
-
-        board = make_move(board, move)
-        game_over = check_win(board)
-
-        # Alternar o jogador
-        current_player = O if current_player == X else X
-
-
-def get_human_move():
-    while True:
-        try:
-            row = int(input("Digite o número da linha (0, 1 ou 2): "))
-            col = int(input("Digite o número da coluna (0, 1 ou 2): "))
-
-            # Verifique se as coordenadas são válidas
-            if row in [0, 1, 2] and col in [0, 1, 2]:
-                return (row, col)
-            else:
-                print("Coordenadas inválidas. Digite novamente.")
-        except ValueError:
-            print("Entrada inválida. Digite números inteiros para a linha e a coluna.")
