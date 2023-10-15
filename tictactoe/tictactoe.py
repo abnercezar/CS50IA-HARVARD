@@ -91,7 +91,7 @@ def minimax(board):
     for i in range(3):
         for j in range(3):
             if board[i][j] == EMPTY:
-                board[i][j] = player(board)
+                new_board = make_move(board, (i,j))
                 if check_win(board, player(board)):
                     return [(i, j)]
                 score = minimax_helper(board, False, alpha, beta)
