@@ -27,6 +27,8 @@ def player(board):
 
 
 # A actionsfunção deve retornar uma lista set de todas as ações possíveis que podem ser executadas em um determinado quadro.
+
+
 def actions(board):
     possible_actions = set()
     for row in range(len(board)):
@@ -78,7 +80,7 @@ def utility(board):
         return 0
 
 
-# A minimax função deve receber a board como entrada e retornar o movimento ideal para o jogador se mover naquele tabuleiro.
+# A minimaxfunção deve receber a boardcomo entrada e retornar o movimento ideal para o jogador se mover naquele tabuleiro.
 def minimax(board):
     if terminal(board):
         return None
@@ -91,7 +93,7 @@ def minimax(board):
     for i in range(3):
         for j in range(3):
             if board[i][j] == EMPTY:
-                new_board = make_move(board, (i,j))
+                board[i][j] = player(board)
                 if check_win(board, player(board)):
                     return [(i, j)]
                 score = minimax_helper(board, False, alpha, beta)
@@ -137,8 +139,9 @@ def minimax_helper(board, is_maximizing, alpha, beta):
         possible_moves = get_possible_moves(board)
 
         for move in possible_moves:
-            new_board = make_move(board, move)
-            score = minimax_helper(new_board, False, alpha, beta)
+            make_move(board, move)
+            score = minimax_helper(board, False, alpha, beta)
+            undo_move(board, move)
             best_score = max(score, best_score)
             alpha = max(alpha, best_score)
             if beta <= alpha:
@@ -148,8 +151,9 @@ def minimax_helper(board, is_maximizing, alpha, beta):
         best_score = float("infinity")
         possible_moves = get_possible_moves(board)
         for move in possible_moves:
-            new_board = make_move(board, move)
-            score = minimax_helper(new_board, True, alpha, beta)
+            make_move(board, move)
+            score = minimax_helper(board, True, alpha, beta)
+            undo_move(board, move)
             best_score = min(score, best_score)
             beta = min(beta, best_score)
             if beta <= alpha:
@@ -227,7 +231,7 @@ def check_winner(board):
         elif all(board[row][col] == "O" for row in range(3)):
             return "O"
 
-    # Verifique as diagonais
+    # Check diagonals
     if all(board[i][i] == "X" for i in range(3)) or all(
         board[i][2 - i] == "X" for i in range(3)
     ):
