@@ -27,8 +27,6 @@ def player(board):
 
 
 # A actionsfunção deve retornar uma lista set de todas as ações possíveis que podem ser executadas em um determinado quadro.
-
-
 def actions(board):
     possible_actions = set()
     for row in range(len(board)):
