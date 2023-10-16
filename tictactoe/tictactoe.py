@@ -16,20 +16,20 @@ def initial_state():
 
 # A player função deve receber um tabuleiro estado como entrada e retornar qual é a vez do jogador (ou X ou O).
 def player(board):
-   countX = 0
-   countO = 0
+    countX = 0
+    countO = 0
 
-   for row in range(len(board)):
-       for col in range(len(board[row])):
-           if board[row][col] == X:
-               countX += 1
-           if board[row][col] == O:
-               countO += 1
+    for row in range(len(board)):
+        for col in range(len(board[row])):
+            if board[row][col] == X:
+                countX += 1
+            if board[row][col] == O:
+                countO += 1
 
-   if countX > countO:
-       return O
-   else:
-       return X
+    if countX > countO:
+        return O
+    else:
+        return X
 
 
 # A actions função deve retornar uma lista set de todas as ações possíveis que podem ser executadas em um determinado quadro.
@@ -43,35 +43,44 @@ def actions(board):
     return allpossible_actions
 
 
-# A result função recebe a board e action como entrada e deve retornar um novo estado da placa, sem modificar a placa original.
+# A result função recebe o 'tabuleiro' e a ação como entrada e deve retornar um novo estado da placa, sem modificar a placa original.
 def result(board, action):
-
-   if action not in actions(board):
-       raise Exception("Ação inválida")
-   row, col = action
-   board_copy = copy.deepcopy(board)
-   board_copy[row][col] = player(board)
-   return board_copy
-
+    if action not in actions(board):
+        raise Exception("Ação inválida")
+    row, col = action
+    board_copy = copy.deepcopy(board)
+    board_copy[row][col] = player(board)
+    return board_copy
 
 
-# A winner função deve aceitar a board como entrada e retornar o vencedor do tabuleiro, se houver.
+# A winner função deve aceitar o 'tabuleiro' como entrada e retornar o vencedor do 'tabuleiro', se houver.
 def winner(board):
-    if checkRows(board, X) or checkColumns(board, X) or checkFirstDiag(board, X) or checkSecDiag(board, X):
+    if (
+        checkRows(board, X)
+        or checkColumns(board, X)
+        or checkFirstDiag(board, X)
+        or checkSecDiag(board, X)
+    ):
         return X
-    elif checkRows(board, O) or checkColumns(board, O) or checkFirstDiag(board, O) or checkSecDiag(board, O):
+    elif (
+        checkRows(board, O)
+        or checkColumns(board, O)
+        or checkFirstDiag(board, O)
+        or checkSecDiag(board, O)
+    ):
         return O
     else:
         return None
 
 
-# A terminal função deve aceitar a "board" como entrada e retornar um valor booleano indicando se o jogo acabou.
+# A terminal função deve aceitar o 'tabuleiro' como entrada e retornar um valor booleano indicando se o jogo acabou.
 def terminal(board):
-    return winner(board) is not None or all(all(cell != EMPTY for cell in row) for row in board)
+    return winner(board) is not None or all(
+        all(cell != EMPTY for cell in row) for row in board
+    )
 
 
-
-# A utility função deve aceitar um terminal board como entrada e saída da utilidade da placa.
+# A utility função deve aceitar um terminal 'tabuleiro' como entrada e saída da utilidade da placa.
 def utility(board):
     if winner(board) == X:
         return 1
@@ -93,6 +102,7 @@ def max_value(board, alpha, beta):
         alpha = max(alpha, v)
     return v
 
+
 def min_value(board, alpha, beta):
     if terminal(board):
         return utility(board)
@@ -106,7 +116,7 @@ def min_value(board, alpha, beta):
     return v
 
 
-# A minimax função deve receber a boardcomo entrada e retornar o movimento ideal para o jogador se mover naquele tabuleiro.
+# A minimax função deve receber o 'tabuleiro' como entrada e retornar o movimento ideal para o jogador se mover naquele 'tabuleiro'.
 def minimax(board):
     alpha = -math.inf
     beta = math.inf
@@ -143,7 +153,11 @@ def minimax(board):
 # Esta função verifica se um jogador ganhou preenchendo uma linha inteira no 'tabuleiro'.
 def checkRows(board, player):
     for row in range(len(board)):
-        if board[row][0] == player and board[row][1] == player and board[row][2] == player:
+        if (
+            board[row][0] == player
+            and board[row][1] == player
+            and board[row][2] == player
+        ):
             return True
     return False
 
@@ -151,7 +165,11 @@ def checkRows(board, player):
 # Esta função verifica se um jogador ganhou preenchendo as colunas
 def checkColumns(board, player):
     for col in range(len(board)):
-        if board[0][col] == player and board[1][col] == player and board[2][col] == player:
+        if (
+            board[0][col] == player
+            and board[1][col] == player
+            and board[2][col] == player
+        ):
             return True
     return False
 
@@ -177,5 +195,3 @@ def checkSecDiag(board, player):
     if count == 3:
         return True
     return False
-
-
