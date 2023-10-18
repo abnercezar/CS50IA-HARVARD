@@ -55,22 +55,28 @@ def result(board, action):
 
 # A winner função deve aceitar o 'tabuleiro' como entrada e retornar o vencedor do 'tabuleiro', se houver.
 def winner(board):
-    if (
-        checkRows(board, X)
-        or checkColumns(board, X)
-        or checkFirstDiag(board, X)
-        or checkSecDiag(board, X)
-    ):
-        return X
-    elif (
-        checkRows(board, O)
-        or checkColumns(board, O)
-        or checkFirstDiag(board, O)
-        or checkSecDiag(board, O)
-    ):
-        return O
-    else:
-        return None
+    def check_line(line, player):
+        return all(cell == player for cell in line)
+
+    for row in board:
+        if check_line(row, X):
+            return X
+        elif check_line(row, O):
+            return O
+
+    for col in range(3):
+        if check_line([board[row][col] for row in range(3)], X):
+            return X
+        elif check_line([board[row][col] for row in range(3)], O):
+            return O
+
+    if check_line([board[i][i] for i in range(3)], X) or check_line([board[i][i] for i in range(3)], O):
+        return X if X == board[1][1] else O
+
+    if check_line([board[i][2 - i] for i in range(3)], X) or check_line([board[i][2 - i] for i in range(3)], O):
+        return X if X == board[1][1] else O
+
+    return None
 
 
 # A terminal função deve aceitar o 'tabuleiro' como entrada e retornar um valor booleano indicando se o jogo acabou.
