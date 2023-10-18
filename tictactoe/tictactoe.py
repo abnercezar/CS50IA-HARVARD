@@ -88,9 +88,10 @@ def terminal(board):
 
 # A utility função deve aceitar um terminal 'tabuleiro' como entrada e saída da utilidade da placa.
 def utility(board):
-    if winner(board) == X:
+    result = winner(board)
+    if result == X:
         return 1
-    elif winner(board) == O:
+    elif result == O:
         return -1
     else:
         return 0
