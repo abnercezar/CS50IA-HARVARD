@@ -95,113 +95,52 @@ def utility(board):
         return -1
     else:
         return 0
-    
+
 
 # A minimax função deve receber o 'tabuleiro' como entrada e retornar o movimento ideal para o jogador se mover naquele 'tabuleiro'.
 def minimax(board):
-    alpha = -math.inf
-    beta = math.inf
     if terminal(board):
         return None
 
     if player(board) == X:
-        plays = []
+        value, best_move = float("-inf"), None
         for action in actions(board):
             new_board = result(board, action)
-            if winner(new_board) == X:
-                return action
-            v = min_value(new_board, alpha, beta)
-            plays.append([v, action])
-            alpha = max(alpha, v)
-            if v >= beta:
-                break
-        return sorted(plays, key=lambda x: x[0], reverse=True)[0][1]
-
-    elif player(board) == O:
-        plays = []
+            move_value = min_value(new_board)
+            if move_value > value:
+                value = move_value
+                best_move = action
+        return best_move
+    else:
+        value, best_move = float("inf"), None
         for action in actions(board):
             new_board = result(board, action)
-            if winner(new_board) == O:
-                return action
-            v = max_value(new_board, alpha, beta)
-            plays.append([v, action])
-            beta = min(beta, v)
-            if v <= alpha:
-                break
-        return sorted(plays, key=lambda x: x[0])[0][1]
+            move_value = max_value(new_board)
+            if move_value < value:
+                value = move_value
+                best_move = action
+        return best_move
 
 
 
-def max_value(board, alpha, beta):
+def max_value(board):
     if terminal(board):
         return utility(board)
-
-    v = -math.inf
+    value = float("-inf")
     for action in actions(board):
-        v = max(v, min_value(result(board, action), alpha, beta))
-        if v >= beta:
-            return v
-        alpha = max(alpha, v)
-    return v
+        value = max(value, min_value(result(board, action)))
+    return value
 
-
-def min_value(board, alpha, beta):
+def min_value(board):
     if terminal(board):
         return utility(board)
-
-    v = math.inf
+    value = float("inf")
     for action in actions(board):
-        v = min(v, max_value(result(board, action), alpha, beta))
-        if v <= alpha:
-            return v
-        beta = min(beta, v)
-    return v
+        value = min(value, max_value(result(board, action)))
+    return value
 
 
 
 
-# Esta função verifica se um jogador ganhou preenchendo uma linha inteira no 'tabuleiro'.
-def checkRows(board, player):
-    for row in range(len(board)):
-        if (
-            board[row][0] == player
-            and board[row][1] == player
-            and board[row][2] == player
-        ):
-            return True
-    return False
 
 
-# Esta função verifica se um jogador ganhou preenchendo as colunas
-def checkColumns(board, player):
-    for col in range(len(board)):
-        if (
-            board[0][col] == player
-            and board[1][col] == player
-            and board[2][col] == player
-        ):
-            return True
-    return False
-
-
-# Esta função verifica se um jogador ganhou preenchendo as diagonais do 'tabuleiro'.
-# Verifique a diagonal principal
-def checkFirstDiag(board, player):
-    count = 0
-    for row in range(len(board)):
-        if board[row][row] == player:
-            count += 1
-    if count == 3:
-        return True
-    return False
-
-
-# Verifique a diagonal secundária
-def checkSecDiag(board, player):
-    count = 0
-    for row in range(len(board)):
-        if board[row][2 - row] == player:
-            count += 1
-    if count == 3:
-        return True
-    return False
