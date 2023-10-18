@@ -95,33 +95,7 @@ def utility(board):
         return -1
     else:
         return 0
-
-
-def max_value(board, alpha, beta):
-    if terminal(board):
-        return utility(board)
-
-    v = -math.inf
-    for action in actions(board):
-        v = max(v, min_value(result(board, action), alpha, beta))
-        if v >= beta:
-            return v
-        alpha = max(alpha, v)
-    return v
-
-
-def min_value(board, alpha, beta):
-    if terminal(board):
-        return utility(board)
-
-    v = math.inf
-    for action in actions(board):
-        v = min(v, max_value(result(board, action), alpha, beta))
-        if v <= alpha:
-            return v
-        beta = min(beta, v)
-    return v
-
+    
 
 # A minimax função deve receber o 'tabuleiro' como entrada e retornar o movimento ideal para o jogador se mover naquele 'tabuleiro'.
 def minimax(board):
@@ -155,6 +129,35 @@ def minimax(board):
             if v <= alpha:
                 break
         return sorted(plays, key=lambda x: x[0])[0][1]
+
+
+
+def max_value(board, alpha, beta):
+    if terminal(board):
+        return utility(board)
+
+    v = -math.inf
+    for action in actions(board):
+        v = max(v, min_value(result(board, action), alpha, beta))
+        if v >= beta:
+            return v
+        alpha = max(alpha, v)
+    return v
+
+
+def min_value(board, alpha, beta):
+    if terminal(board):
+        return utility(board)
+
+    v = math.inf
+    for action in actions(board):
+        v = min(v, max_value(result(board, action), alpha, beta))
+        if v <= alpha:
+            return v
+        beta = min(beta, v)
+    return v
+
+
 
 
 # Esta função verifica se um jogador ganhou preenchendo uma linha inteira no 'tabuleiro'.
