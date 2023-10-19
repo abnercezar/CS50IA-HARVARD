@@ -118,36 +118,29 @@ def min_value(board, alpha, beta):
 
 # A minimax função deve receber o 'tabuleiro' como entrada e retornar o movimento ideal para o jogador se mover naquele 'tabuleiro'.
 def minimax(board):
-    alpha = -math.inf
-    beta = math.inf
     if terminal(board):
         return None
 
     if player(board) == X:
-        plays = []
+        best_score = -math.inf
+        best_action = None
         for action in actions(board):
             new_board = result(board, action)
-            if winner(new_board) == X:
-                return action
-            v = min_value(new_board, alpha, beta)
-            plays.append([v, action])
-            alpha = max(alpha, v)
-            if v >= beta:
-                break
-        return sorted(plays, key=lambda x: x[0], reverse=True)[0][1]
-
-    elif player(board) == O:
-        plays = []
+            score = min_value(new_board, -math.inf, math.inf)
+            if score > best_score:
+                best_score = score
+                best_action = action
+        return best_action
+    else:
+        best_score = math.inf
+        best_action = None
         for action in actions(board):
             new_board = result(board, action)
-            if winner(new_board) == O:
-                return action
-            v = max_value(new_board, alpha, beta)
-            plays.append([v, action])
-            beta = min(beta, v)
-            if v <= alpha:
-                break
-        return sorted(plays, key=lambda x: x[0])[0][1]
+            score = max_value(new_board, -math.inf, math.inf)
+            if score < best_score:
+                best_score = score
+                best_action = action
+        return best_action
 
 
 # Esta função verifica se um jogador ganhou preenchendo uma linha inteira no 'tabuleiro'.
@@ -195,3 +188,5 @@ def checkSecDiag(board, player):
     if count == 3:
         return True
     return False
+################################
+############################### CORRIGIDO UMA MINIMAX, AGORA PRECISO REALIZAR TESTES
