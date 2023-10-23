@@ -142,7 +142,6 @@ def minimax(board):
                 best_action = action
         return best_action
 
-
 # Esta função verifica se um jogador ganhou preenchendo uma linha inteira no 'tabuleiro'.
 def checkRows(board, player):
     for row in range(len(board)):
@@ -188,5 +187,7 @@ def checkSecDiag(board, player):
     if count == 3:
         return True
     return False
-################################
-############################### CORRIGIDO UMA MINIMAX, AGORA PRECISO REALIZAR TESTES
+
+
+
+
