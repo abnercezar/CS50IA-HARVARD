@@ -89,6 +89,7 @@ def utility(board):
     else:
         return 0
 
+
 # Esta função implementa a parte Max do algoritmo Minimax com poda Alfa-Beta.
 def max_value(board, alpha, beta):
     if terminal(board):
@@ -101,6 +102,7 @@ def max_value(board, alpha, beta):
             return v
         alpha = max(alpha, v)
     return v
+
 
 # Esta função implementa a parte Min do algoritmo Minimax com poda Alfa-Beta.
 def min_value(board, alpha, beta):
@@ -141,6 +143,7 @@ def minimax(board):
                 best_score = score
                 best_action = action
         return best_action
+
 
 # Esta função verifica se um jogador ganhou preenchendo uma linha inteira no 'tabuleiro'.
 def checkRows(board, player):
@@ -187,7 +190,3 @@ def checkSecDiag(board, player):
     if count == 3:
         return True
     return False
-
-
-
-
