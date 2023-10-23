@@ -89,7 +89,7 @@ def utility(board):
     else:
         return 0
 
-
+# Esta função implementa a parte Max do algoritmo Minimax com poda Alfa-Beta.
 def max_value(board, alpha, beta):
     if terminal(board):
         return utility(board)
@@ -102,7 +102,7 @@ def max_value(board, alpha, beta):
         alpha = max(alpha, v)
     return v
 
-
+# Esta função implementa a parte Min do algoritmo Minimax com poda Alfa-Beta.
 def min_value(board, alpha, beta):
     if terminal(board):
         return utility(board)
