@@ -21,8 +21,11 @@ knowledgeBase = And(
 # Puzzle 0
 # A says "I am both a knight and a knave."
 knowledge0 = And(
-    # TODO
+    knowledgeBase,
+    Implication(Aknight, And(AKnight, Aknave)),
+    Implication(Aknave, Not(And(AKnight, Aknave)))
 )
+
 
 # Puzzle 1
 # A says "We are both knaves."
