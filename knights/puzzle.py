@@ -43,6 +43,8 @@ knowledge2 = And(
     knowledgeBase,
     Implication(AKnight, Or(And(AKnight, BKnight), And(AKnave, BKnave))),
     Implication(AKnave, Not(Or(And(AKnight, BKnight), And(AKnave, BKnave)))),
+    Implication(BKnight, Or(And(BKnight, AKnave), And(BKnave, AKnight))),
+    Implication(BKnave, Not(Or(And(BKnight, AKnave), And(BKnave, AKnight)))),
 )
 
 # Puzzle 3
