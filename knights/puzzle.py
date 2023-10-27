@@ -23,7 +23,7 @@ knowledgeBase = And(
 knowledge0 = And(
     knowledgeBase,
     Implication(AKnight, And(AKnight, AKnave)),
-    Implication(AKnave, Not(And(AKnight, AKnave)))
+    Implication(AKnave, Not(And(AKnight, AKnave))),
 )
 
 
@@ -33,7 +33,7 @@ knowledge0 = And(
 knowledge1 = And(
     knowledgeBase,
     Implication(AKnight, And(AKnave, BKnave)),
-    Implication(AKnave, Not(And(AKnave, BKnave)))
+    Implication(AKnave, Not(And(AKnave, BKnave))),
 )
 
 # Puzzle 2
@@ -43,7 +43,6 @@ knowledge2 = And(
     knowledgeBase,
     Implication(AKnight, Or(And(AKnight, BKnight), And(AKnave, BKnave))),
     Implication(AKnave, Not(Or(And(AKnight, BKnight), And(AKnave, BKnave)))),
-
     Implication(BKnight, Or(And(BKnight, AKnave), And(BKnave, AKnight))),
     Implication(BKnave, Not(Or(And(BKnight, AKnave), And(BKnave, AKnight)))),
 )
@@ -55,16 +54,21 @@ knowledge2 = And(
 # C says "A is a knight."
 knowledge3 = And(
     knowledgeBase,
-
     Implication(AKnight, Or(AKnight, AKnave)),
     Implication(AKnave, Not(Or(AKnight, AKnave))),
-
-    Or(Implication(BKnight, Or(Implication(AKnight, AKnave), Implication(AKnave, Not(AKnave)))), Implication(BKnave, Not(Or(Implication(AKnight, AKnave), Implication(AKnave, Not(AKnave))))))),
+    Or(
+        Implication(
+            BKnight, Or(Implication(AKnight, AKnave), Implication(AKnave, Not(AKnave)))
+        ),
+        Implication(
+            BKnave,
+            Not(Or(Implication(AKnight, AKnave), Implication(AKnave, Not(AKnave)))),
+        ),
+    ),
     Implication(BKnight, CKnave),
     Implication(BKnave, Not(CKnave)),
-
     Implication(CKnight, AKnight),
-    Implication(CKnave, Not(AKnight))
+    Implication(CKnave, Not(AKnight)),
 )
 
 
@@ -74,7 +78,7 @@ def main():
         ("Puzzle 0", knowledge0),
         ("Puzzle 1", knowledge1),
         ("Puzzle 2", knowledge2),
-        ("Puzzle 3", knowledge3)
+        ("Puzzle 3", knowledge3),
     ]
     for puzzle, knowledge in puzzles:
         print(puzzle)
