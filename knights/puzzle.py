@@ -54,10 +54,12 @@ knowledge2 = And(
 # B says "C is a knave."
 # C says "A is a knight."
 knowledge3 = And(
+    knowledgeBase,
+
     Implication(AKnight, Or(AKnight, AKnave)),
     Implication(AKnave, Not(Or(AKnight, AKnave))),
 
-    Implication(BKnight, CKnave)),
+    Implication(BKnight, CKnave),
     Implication(BKnave, not(CKnave)),
 
     Implication(CKnight, AKnight),
