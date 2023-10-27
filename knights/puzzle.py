@@ -22,8 +22,8 @@ knowledgeBase = And(
 # A says "I am both a knight and a knave."
 knowledge0 = And(
     knowledgeBase,
-    Implication(Aknight, And(AKnight, Aknave)),
-    Implication(Aknave, Not(And(AKnight, Aknave)))
+    Implication(AKnight, And(AKnight, AKnave)),
+    Implication(AKnave, Not(And(AKnight, AKnave)))
 )
 
 
