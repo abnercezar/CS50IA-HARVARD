@@ -13,7 +13,9 @@ knowledgeBase = And(
     Or(AKnight, AKnave),
     Or(BKnight, BKnave),
     Or(CKnight, CKnave),
-    Not(And())
+    Not(And(AKnight, AKnave))
+    Not(And(BKnight, BKnave))
+    Not(And(CKnight, CKnave))
 )
 
 # Puzzle 0
