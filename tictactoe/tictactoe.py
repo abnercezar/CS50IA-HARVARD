@@ -4,14 +4,15 @@ Tic Tac Toe Player
 
 import math
 import copy
-import random
 
 X = "X"
 O = "O"
 EMPTY = " "
+EMPTY = " "
 
 
 def initial_state():
+    return [[EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY]]
     return [[EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY]]
 
 
@@ -29,14 +30,14 @@ def player(board):
 # A actionsfunção deve retornar uma lista setde todas as ações possíveis que podem ser executadas em um determinado quadro.
 
 
+# A actions função deve retornar uma lista set de todas as ações possíveis que podem ser executadas em um determinado quadro.
 def actions(board):
     possible_actions = set()
     for row in range(len(board)):
         for col in range(len(board[0])):
             if board[row][col] == EMPTY:
-                possible_actions.add((row, col))
-
-    return possible_actions
+                allpossible_actions.add((row, col))
+    return allpossible_actions
 
 
 # A result função recebe a board e action como entrada e deve retornar um novo estado da placa, sem modificar a placa original.
