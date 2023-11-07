@@ -144,4 +144,4 @@ while True:
                     board = ttt.initial_state()
                     ai_turn = False
 
-    pygame.display.flip()
+    pygame.display.flip() 
