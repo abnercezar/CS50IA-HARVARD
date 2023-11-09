@@ -7,13 +7,15 @@ class Minesweeper:
     Minesweeper game representation
     """
 
+    # Este método inicializa o tabuleiro do Campo Minado com a altura e largura fornecidas e configura um campo minado vazio.
     def __init__(self, height=8, width=8, mines=8):
-        # Set initial width, height, and number of mines
+
+        # Definir largura inicial, altura e número de minas
         self.height = height
         self.width = width
         self.mines = set()
 
-        # Initialize an empty field with no mines
+        # Inicializa um campo vazio sem minas
         self.board = []
         for i in range(self.height):
             row = []
@@ -21,7 +23,7 @@ class Minesweeper:
                 row.append(False)
             self.board.append(row)
 
-        # Add mines randomly
+        # Adicione minas aleatoriamente
         while len(self.mines) != mines:
             i = random.randrange(height)
             j = random.randrange(width)
@@ -29,7 +31,7 @@ class Minesweeper:
                 self.mines.add((i, j))
                 self.board[i][j] = True
 
-        # At first, player has found no mines
+        # A princípio, o jogador não encontrou nenhuma mina
         self.mines_found = set()
 
     def print(self):
@@ -58,17 +60,17 @@ class Minesweeper:
         not including the cell itself.
         """
 
-        # Keep count of nearby mines
+        # Mantenha a contagem das minas próximas
         count = 0
 
-        # Loop over all cells within one row and column
+        # Loop sobre todas as células dentro de uma linha e coluna
         for i in range(cell[0] - 1, cell[0] + 2):
             for j in range(cell[1] - 1, cell[1] + 2):
-                # Ignore the cell itself
+                # Ignore a própria célula
                 if (i, j) == cell:
                     continue
 
-                # Update count if cell in bounds and is mine
+                # Atualizar contagem se a célula estiver dentro dos limites e for minha
                 if 0 <= i < self.height and 0 <= j < self.width:
                     if self.board[i][j]:
                         count += 1
@@ -139,18 +141,18 @@ class MinesweeperAI:
     """
 
     def __init__(self, height=8, width=8):
-        # Set initial height and width
+        #Definir altura e largura iniciais
         self.height = height
         self.width = width
 
-        # Keep track of which cells have been clicked on
+        # Acompanhe quais células foram clicadas
         self.moves_made = set()
 
-        # Keep track of cells known to be safe or mines
+        # Acompanhe as células consideradas seguras ou minas
         self.mines = set()
         self.safes = set()
 
-        # List of sentences about the game known to be true
+        # Lista de frases sobre o jogo conhecidas como verdadeiras
         self.knowledge = []
 
     def mark_mine(self, cell):
