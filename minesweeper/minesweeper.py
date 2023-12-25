@@ -4,12 +4,11 @@ import random
 
 class Minesweeper:
     """
-    Minesweeper game representation
+    Representação do jogo Campo Minado
     """
 
     # Este método inicializa o tabuleiro do Campo Minado com a altura e largura fornecidas e configura um campo minado vazio.
     def __init__(self, height=8, width=8, mines=8):
-
         # Definir largura inicial, altura e número de minas
         self.height = height
         self.width = width
@@ -36,8 +35,8 @@ class Minesweeper:
 
     def print(self):
         """
-        Prints a text-based representation
-        of where mines are located.
+        Imprime uma representação baseada em texto
+        de onde as minas estão localizadas.
         """
         for i in range(self.height):
             print("--" * self.width + "-")
@@ -51,13 +50,16 @@ class Minesweeper:
 
     def is_mine(self, cell):
         i, j = cell
-        return self.board[i][j]
+        if i >= 0 and i < len(self.board) and j >= 0 and j < len(self.board[i]):
+            return self.board[i][j]
+        else:
+            return False
 
     def nearby_mines(self, cell):
         """
-        Returns the number of mines that are
-        within one row and column of a given cell,
-        not including the cell itself.
+        Retorna o número de minas que estão
+        dentro de uma linha e coluna de uma determinada célula,
+        não incluindo a própria célula.
         """
 
         # Mantenha a contagem das minas próximas
@@ -79,16 +81,16 @@ class Minesweeper:
 
     def won(self):
         """
-        Checks if all mines have been flagged.
+        Verifica se todas as minas foram sinalizadas.
         """
         return self.mines_found == self.mines
 
 
 class Sentence:
     """
-    Logical statement about a Minesweeper game
-    A sentence consists of a set of board cells,
-    and a count of the number of those cells which are mines.
+    Declaração lógica sobre um jogo Campo Minado
+    Uma frase consiste em um conjunto de células de tabuleiro,
+    e uma contagem do número dessas células que são minas.
     """
 
     def __init__(self, cells, count):
@@ -103,7 +105,7 @@ class Sentence:
 
     def known_mines(self):
         """
-        Returns the set of all cells in self.cells known to be mines.
+        Retorna o conjunto de todas as células em self.cells conhecidas como minas.
         """
         if len(self.cells) == self.count and self.count != 0:
             return self.cells
@@ -111,7 +113,7 @@ class Sentence:
 
     def known_safes(self):
         """
-        Returns the set of all cells in self.cells known to be safe.
+        Retorna um conjunto de todas as células conhecidas como seguras.
         """
         if self.count == 0:
             return self.cells
@@ -119,8 +121,8 @@ class Sentence:
 
     def mark_mine(self, cell):
         """
-        Updates internal knowledge representation given the fact that
-        a cell is known to be a mine.
+        Atualiza a representação interna do conhecimento dado o fato de que
+        uma célula é conhecida por ser uma mina.
         """
         if cell in self.cells:
             self.cells.remove(cell)
@@ -128,8 +130,8 @@ class Sentence:
 
     def mark_safe(self, cell):
         """
-        Updates internal knowledge representation given the fact that
-        a cell is known to be safe.
+        Atualiza a representação interna do conhecimento dado o fato de que
+        uma célula é conhecida por ser segura.
         """
         if cell in self.cells:
             self.cells.remove(cell)
@@ -137,11 +139,11 @@ class Sentence:
 
 class MinesweeperAI:
     """
-    Minesweeper game player
+    Jogador do jogo Campo Minado
     """
 
     def __init__(self, height=8, width=8):
-        #Definir altura e largura iniciais
+        # Definir altura e largura iniciais
         self.height = height
         self.width = width
 
@@ -157,46 +159,59 @@ class MinesweeperAI:
 
     def mark_mine(self, cell):
         """
-        Marks a cell as a mine, and updates all knowledge
-        to mark that cell as a mine as well.
+        Marca uma célula como mina e atualiza todo o conhecimento
+        para marcar aquela célula como uma mina também
         """
+        # Adiciona a célula à lista de minas
         self.mines.add(cell)
+
+        # Itera sobre todas as sentenças conhecidas e marca a célula como uma mina nelas
         for sentence in self.knowledge:
             sentence.mark_mine(cell)
 
     def mark_safe(self, cell):
         """
-        Marks a cell as safe, and updates all knowledge
-        to mark that cell as safe as well.
+        Marca uma célula como segura e atualiza todo o conhecimento
+        para marcar essa célula como segura também.
         """
+        # Adiciona a célula à lista de células seguras
         self.safes.add(cell)
+
+        # Itera sobre todas as sentenças conhecidas e marca a célula como segura nelas
         for sentence in self.knowledge:
             sentence.mark_safe(cell)
 
     def add_knowledge(self, cell, count):
         """
-        Called when the Minesweeper board tells us, for a given
-        safe cell, how many neighboring cells have mines in them.
+        Chamado quando o tabuleiro do Campo Minado nos informa, para um determinado
+        célula segura, quantas células vizinhas contêm minas.
 
-        This function should:
-            1) mark the cell as a move that has been made
-            2) mark the cell as safe
-            3) add a new sentence to the AI's knowledge base
-               based on the value of `cell` and `count`
-            4) mark any additional cells as safe or as mines
-               if it can be concluded based on the AI's knowledge base
-            5) add any new sentences to the AI's knowledge base
-               if they can be inferred from existing knowledge
+        Esta função deve:
+            1) marque a célula como um movimento que foi feito
+            2) marque a célula como segura
+            3) adicionar uma nova frase à base de conhecimento da IA
+               com base no valor de `cell` e `count`
+            4) marque quaisquer células adicionais como seguras ou como minas
+               se puder ser concluído com base na base de conhecimento da IA
+            5) adicionar novas frases à base de conhecimento da IA
+               se eles podem ser inferidos a partir do conhecimento existente
         """
+        # Marca a célula como um movimento feito
         self.moves_made.add(cell)
+
+        # Marca a célula como segura
         self.mark_safe(cell)
 
         undeterminedCells = []
         countMines = 0
+
+        # Verifica as células vizinhas
         for i in range(cell[0] - 1, cell[0] + 2):
             for j in range(cell[1] - 1, cell[1] + 2):
                 if (i, j) in self.mines:
                     countMines += 1
+
+                # Adiciona células não determinadas à lista
                 if (
                     0 <= 1 < self.height
                     and 0 <= j < self.width
@@ -204,9 +219,14 @@ class MinesweeperAI:
                     and (i, j) not in self.mines
                 ):
                     undeterminedCells.append((i, j))
+
+        # Adiciona uma nova sentença à base de conhecimento do AI
         newSentence = Sentence(undeterminedCells, count - countMines)
+
+        # Atualiza a base de conhecimento com base na nova informação
         self.knowledge.append(newSentence)
 
+        # Marca as minas e células seguras conhecidas em todas as sentenças
         for sentence in self.knowledge:
             if sentence.known_mines():
                 for cell in sentence.known_mines().copy():
@@ -215,6 +235,7 @@ class MinesweeperAI:
                 for cell in sentence.known_safes().copy():
                     self.mark_safe(cell)
 
+        # Verifica se uma sentença é um subconjunto de outra e cria uma nova sentença
         for sentence in self.knowledge:
             if (
                 newSentence.cells.issubset(sentence.cells)
@@ -230,24 +251,24 @@ class MinesweeperAI:
 
     def make_safe_move(self):
         """
-        Returns a safe cell to choose on the Minesweeper board.
-        The move must be known to be safe, and not already a move
-        that has been made.
+        Retorna uma célula segura para escolher no tabuleiro do Campo Minado.
+        A mudança deve ser considerada segura e não já uma mudança
+        que foi feito.
 
-        This function may use the knowledge in self.mines, self.safes
-        and self.moves_made, but should not modify any of those values.
+        Esta função pode usar o conhecimento em self.mines, self.safes
+        e self.moves_made, mas não deve modificar nenhum desses valores.
         """
         for cell in self.safes:
-            if cell in self.moves_made:
+            if cell not in self.moves_made:
                 return cell
-            return None
+        return None
 
     def make_random_move(self):
         """
-        Returns a move to make on the Minesweeper board.
-        Should choose randomly among cells that:
-            1) have not already been chosen, and
-            2) are not known to be mines
+        Retorna um movimento a ser feito no tabuleiro do Campo Minado.
+        Deve escolher aleatoriamente entre células que:
+            1) ainda não foram escolhidos, e
+            2) não são conhecidos por serem minas
         """
         possibleMoves = []
         for i in range(self.height):
