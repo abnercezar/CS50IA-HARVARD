@@ -40,48 +40,89 @@ def crawl(directory):
 
     # Only include links to other pages in the corpus
     for filename in pages:
-        pages[filename] = set(
-            link for link in pages[filename]
-            if link in pages
-        )
+        pages[filename] = set(link for link in pages[filename] if link in pages)
 
     return pages
 
 
 def transition_model(corpus, page, damping_factor):
     """
-    Return a probability distribution over which page to visit next,
-    given a current page.
+    Retornar uma distribuição de probabilidade sobre qual página visitar em seguida,
+    dada uma página atual.
 
-    With probability `damping_factor`, choose a link at random
-    linked to by `page`. With probability `1 - damping_factor`, choose
-    a link at random chosen from all pages in the corpus.
+    Com probabilidade `damping_factor`, escolha um link aleatoriamente
+    vinculado por `página`. Com probabilidade `1 - fator de amortecimento`, escolha
+    um link escolhido aleatoriamente em todas as páginas do corpus.
     """
-    raise NotImplementedError
+    transition_probability = {}
+    num_pages = len(corpus)
+    num_links = len(corpus[page])
+
+    for p in corpus:
+        transition_probability[p] = (1 - damping_factor) / num_pages
+
+    for linked_page in corpus[page]:
+        transition_probability[linked_page] += damping_factor / num_links
+
+    return transition_probability
 
 
 def sample_pagerank(corpus, damping_factor, n):
     """
-    Return PageRank values for each page by sampling `n` pages
-    according to transition model, starting with a page at random.
+    Retorne valores de PageRank para cada página amostrando `n` páginas
+    de acordo com o modelo de transição, começando com uma página aleatória.
 
-    Return a dictionary where keys are page names, and values are
-    their estimated PageRank value (a value between 0 and 1). All
-    PageRank values should sum to 1.
+    Retorne um dicionário onde as chaves são nomes de páginas e os valores são
+    seu valor estimado de PageRank (um valor entre 0 e 1). Todos
+    Os valores do PageRank devem somar 1.
     """
-    raise NotImplementedError
+    num_pages = len(corpus)
+    ranks = {page: 0 for page in corpus}
+
+    current_page = random.choice(list(corpus.keys()))
+
+    for _ in range(n):
+        probabilities = transition_model(corpus, current_page, damping_factor)
+        current_page = random.choices(
+            list(probabilities.keys()),
+            weights=list(probabilities.values()),
+            k=1
+        )[0]
+
+        ranks[current_page] += 1 / n
+
+    return ranks
 
 
 def iterate_pagerank(corpus, damping_factor):
     """
-    Return PageRank values for each page by iteratively updating
-    PageRank values until convergence.
+    Retorne valores de PageRank para cada página atualizando iterativamente
+    Valores do PageRank até a convergência.
 
-    Return a dictionary where keys are page names, and values are
-    their estimated PageRank value (a value between 0 and 1). All
-    PageRank values should sum to 1.
+    Retorne um dicionário onde as chaves são nomes de páginas e os valores são
+    seu valor estimado de PageRank (um valor entre 0 e 1). Todos
+    Os valores do PageRank devem somar 1.
     """
-    raise NotImplementedError
+    ranks = {page: 1 / len(corpus) for page in corpus}
+
+    while True:
+        new_ranks = {}
+
+        for page in corpus:
+            rank = (1 - damping_factor) / len(corpus)
+
+            for linked_page in corpus:
+                if page in corpus[linked_page]:
+                    rank += damping_factor * ranks[linked_page] / len(corpus[linked_page])
+
+            new_ranks[page] = rank
+
+        if all(abs(new_ranks[page] - ranks[page]) < 0.000001 for page in corpus):
+            break
+
+        ranks = new_ranks
+
+    return ranks
 
 
 if __name__ == "__main__":
