@@ -23,13 +23,13 @@ def main():
 
 def crawl(directory):
     """
-    Parse a directory of HTML pages and check for links to other pages.
-    Return a dictionary where each key is a page, and values are
-    a list of all other pages in the corpus that are linked to by the page.
+    Analise um diretório de páginas HTML e verifique links para outras páginas.
+    Retorne um dicionário onde cada chave é uma página e os valores são
+    uma lista de todas as outras páginas do corpus vinculadas pela página.
     """
     pages = dict()
 
-    # Extract all links from HTML files
+    # Extraia todos os links de arquivos HTML
     for filename in os.listdir(directory):
         if not filename.endswith(".html"):
             continue
@@ -38,7 +38,7 @@ def crawl(directory):
             links = re.findall(r"<a\s+(?:[^>]*?)href=\"([^\"]*)\"", contents)
             pages[filename] = set(links) - {filename}
 
-    # Only include links to other pages in the corpus
+    # Incluir apenas links para outras páginas no corpus
     for filename in pages:
         pages[filename] = set(link for link in pages[filename] if link in pages)
 
@@ -54,16 +54,30 @@ def transition_model(corpus, page, damping_factor):
     vinculado por `página`. Com probabilidade `1 - fator de amortecimento`, escolha
     um link escolhido aleatoriamente em todas as páginas do corpus.
     """
+    # Inicializa um dicionário vazio para armazenar as probabilidades de transição
     transition_probability = {}
+
+    # Conta o número total de páginas do corpus
     num_pages = len(corpus)
+
+    # Conta o número total de links em uma página específica do corpus
     num_links = len(corpus[page])
 
+    # Itera em cada página do corpus.
     for p in corpus:
+        # Define a probabilidade de transição inicial para cada página como a mesma, que é
+        # (1 - fator de amortecimento) dividido pelo número total de páginas. Isso representa a
+        # probabilidade de um surfista aleatório pular para qualquer página do corpus.
         transition_probability[p] = (1 - damping_factor) / num_pages
 
+    # Itera em cada página vinculada à página atual
     for linked_page in corpus[page]:
+        # Adiciona ao valor da probabilidade de transição da página vinculada o fator de amortecimento
+        # dividido pelo número total de links na página atual. Isso representa a probabilidade de um surfista
+        # permanecer na página atual e ir para a página vinculada.
         transition_probability[linked_page] += damping_factor / num_links
 
+    # Retorna o dicionário com as probabilidades de transição
     return transition_probability
 
 
@@ -76,21 +90,26 @@ def sample_pagerank(corpus, damping_factor, n):
     seu valor estimado de PageRank (um valor entre 0 e 1). Todos
     Os valores do PageRank devem somar 1.
     """
+    # Calcula o número total de páginas no corpus
     num_pages = len(corpus)
+
+    # Cria um dicionário onde cada página do corpus é uma chave e a classificação inicial é definida como 0
     ranks = {page: 0 for page in corpus}
 
+    # Seleciona uma página aleatória do corpus para iniciar o algoritmo PageRank
     current_page = random.choice(list(corpus.keys()))
 
+    # Executa o algoritmo PageRank 'n' vezes
     for _ in range(n):
         probabilities = transition_model(corpus, current_page, damping_factor)
         current_page = random.choices(
-            list(probabilities.keys()),
-            weights=list(probabilities.values()),
-            k=1
+            list(probabilities.keys()), weights=list(probabilities.values()), k=1
         )[0]
 
+        # Atualiza a classificação da página atual
         ranks[current_page] += 1 / n
 
+    # Retorna o dicionário com as classificações das páginas
     return ranks
 
 
@@ -103,25 +122,38 @@ def iterate_pagerank(corpus, damping_factor):
     seu valor estimado de PageRank (um valor entre 0 e 1). Todos
     Os valores do PageRank devem somar 1.
     """
+    # Inicializa o dicionário de classificações com uma classificação igual para todas as páginas
     ranks = {page: 1 / len(corpus) for page in corpus}
 
+    # Loop infinito que só termina quando as classificações não mudam significativamente entre duas iterações
     while True:
+        # Inicializa um novo dicionário para armazenar as novas classificações
         new_ranks = {}
 
+        # Itera em cada página do corpus
         for page in corpus:
+            # Define a classificação inicial para a página atual
             rank = (1 - damping_factor) / len(corpus)
 
+            # Itera em cada página vinculada à página atual
             for linked_page in corpus:
+                # Se a página atual está vinculada à página vinculada, adiciona ao valor da classificação da página atual
+                # o produto do fator de amortecimento e da classificação da página vinculada, dividido pelo número total de páginas vinculadas
                 if page in corpus[linked_page]:
-                    rank += damping_factor * ranks[linked_page] / len(corpus[linked_page])
+                    rank += (
+                        damping_factor * ranks[linked_page] / len(corpus[linked_page])
+                    )
 
+            # Armazena a nova classificação da página atual
             new_ranks[page] = rank
-
+        # Verifica se as classificações não mudaram significativamente entre duas iterações
         if all(abs(new_ranks[page] - ranks[page]) < 0.000001 for page in corpus):
+            # Se não houve mudança significativa, interrompe o loop
             break
 
+        # Atualiza as classificações com as novas classificações
         ranks = new_ranks
-
+    # Retorna o dicionário final com as classificações
     return ranks
 
 
